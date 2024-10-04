@@ -1,0 +1,46 @@
+{
+  "name": "aliased",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@lit-labs/router": "0.1.3",
+    "@shoelace-style/shoelace": "2.16.0",
+    "@vaadin/app-layout": "24.4.10",
+    "@vaadin/scroller": "24.4.10",
+    "@vaadin/side-nav": "24.4.10",
+    "@vaadin/icon": "24.4.10",
+    "@vaadin/upload": "24.4.10",
+    "@web5/agent": "0.7.3",
+    "@web5/api": "0.0.0-next-b97dace-20240912134256",
+    "@web5/common": "^1.0.2",
+    "@web5/crypto": "^1.0.5",
+    "@web5/dids": "1.1.3",
+    "@web5/user-agent": "0.6.3",
+    "date-fns": "^2.23.0",
+    "lit": "^3.1.2",
+    "qr-scanner": "^1.4.2",
+    "urlpattern-polyfill": "10.0.0"
+  },
+  "devDependencies": {
+    "@vite-pwa/assets-generator": "^0.2.4",
+    "gh-pages": "^6.1.1",
+    "vite": "^5.2.0",
+    "vite-plugin-node-stdlib-browser": "^0.2.1",
+    "vite-plugin-pwa": "^0.20.0",
+    "workbox-core": "^7.1.0",
+    "workbox-precaching": "^7.1.0",
+    "workbox-routing": "^7.1.0",
+    "workbox-strategies": "^7.1.0",
+    "workbox-window": "^7.1.0"
+  },
+  "resolutions": {
+    "sharp": "0.32.6",
+    "sharp-ico": "0.1.5"
+  }
+}
