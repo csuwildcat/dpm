@@ -6,14 +6,14 @@ import * as protocols from '../utils/protocols.js';
 
 import '../components/shoelace.js';
 
-import '../components/create-identity';
+import '../components/create-identity.js';
 import '../components/detail-box.js';
 import { notify } from '../utils/notifications.js';
 import PageStyles from '../styles/page.js';
 
-import { State, Query, Spinner, SpinnerStyles } from '../components/mixins';
+import { State, Query, Spinner, SpinnerStyles } from '../components/mixins/index.js';
 
-export class IdentitiesPage extends LitElement.with(State, Query, Spinner) {
+export class PackagesPage extends LitElement.with(State, Query, Spinner) {
 
   static properties = {
     ready: { store: 'page' },
@@ -97,7 +97,6 @@ export class IdentitiesPage extends LitElement.with(State, Query, Spinner) {
   }
 
   async saveIdentityLabel(e, identity) {
-    console.log(e);
     let label = e.target.value.trim().toLowerCase();
     let currentLabel = identity.connectRecord?.cache?.json?.label || '';
     if (label && label !== currentLabel && Date.now() > this.lastIdentityLabelSave + 2000) {
@@ -112,7 +111,7 @@ export class IdentitiesPage extends LitElement.with(State, Query, Spinner) {
   }
 
   render() {
-    const identities = Object.values(this.identities || {});
+    const packages = Object.values(this.packages || {});
 
     return html`
       <section page-section>
@@ -146,7 +145,7 @@ export class IdentitiesPage extends LitElement.with(State, Query, Spinner) {
                 return html`
                 <li>
                   <div flex="center-y">
-                    <a href="/directory/${did}">
+                    <a href="/${did}">
                       <sl-avatar image="${identity.avatar || `https://dweb/${did}/read/protocols/${this.profileProtocolEncoded}/avatar`}" shape="circle" size="small"></sl-avatar>
                       ${did}
                     </a> 
@@ -388,4 +387,4 @@ export class IdentitiesPage extends LitElement.with(State, Query, Spinner) {
   ]
 }
 
-customElements.define('identities-page', IdentitiesPage)
+customElements.define('packages-page', PackagesPage)

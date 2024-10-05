@@ -22,7 +22,8 @@ activatePolyfills();
 import { DOM } from './utils/dom.js';
 
 import './pages/connect';
-import './pages/find';
+import './pages/directory';
+import './pages/packages';
 import './pages/identities';
 import PageStyles from './styles/page';
 import { Oidc } from '@web5/agent';
@@ -60,11 +61,19 @@ export class AppView extends LitElement.with($App, State, Query) {
       routes: [
         {
           path: '/',
+          component: '#directory'
+        },
+        {
+          path: '/directory/:did(did:.*)?',
+          component: '#directory'
+        },
+        {
+          path: '/identities',
           component: '#identities'
         },
         {
-          path: '/profiles(/)?:did?',
-          component: '#find'
+          path: '/packages',
+          component: '#packages'
         },
         {
           path: '/dweb-connect(/.*)?',
@@ -121,17 +130,22 @@ export class AppView extends LitElement.with($App, State, Query) {
     <vaadin-app-layout id="app_layout">
       
       <sl-icon slot="navbar" id="nav_toggle" name="list" @click="${e => this.appLayout.drawerOpened = true}"></sl-icon>
-      <sl-icon slot="navbar" id="logo_icon" name="app-logo"></sl-icon>
-      <h1 slot="navbar">Aliased</h1>
+      <!-- <sl-icon slot="navbar" id="logo_icon" name="app-logo"></sl-icon> -->
+      <h1 slot="navbar">dpm</h1>
 
       <nav id="nav" slot="drawer" @click="${e => this.nav?.removeAttribute('open')}">
+        
         <a href="/" ?active="${location.pathname === '/'}">
-          <sl-icon slot="prefix" name="people"></sl-icon>
-          My IDs
-        </a>
-        <a href="/profiles" ?active="${location.pathname.startsWith('/profiles')}">
           <sl-icon slot="prefix" name="search"></sl-icon>
           Find
+        </a>
+        <a href="/packages" ?active="${location.pathname.startsWith('/packages')}">
+          <sl-icon slot="prefix" name="box-seam"></sl-icon>
+          My Packages
+        </a>
+        <a href="/identities" ?active="${location.pathname.startsWith('/identities')}">
+          <sl-icon slot="prefix" name="people"></sl-icon>
+          My IDs
         </a>
       </nav>
       <sl-button id="drawer_close_button" variant="text" @click="${e => this.appLayout.drawerOpened = false}">
@@ -139,7 +153,7 @@ export class AppView extends LitElement.with($App, State, Query) {
       </sl-button>
       
 
-      <find-page id="find" page="full-width"></find-page>
+      <directory-page id="directory" page="full-width"></directory-page>
       <identities-page id="identities" page></identities-page>
       <connect-page id="connect" page></connect-page>
 
@@ -213,7 +227,7 @@ export class AppView extends LitElement.with($App, State, Query) {
         height: var(--header-height);
         min-height: var(--header-height);
         padding: 0 0.65rem;
-        background: #17456d;
+        background: #cb0101;
         box-shadow: 0 0 2px 1px rgba(0 0 0 / 25%);
         user-select: none;
       }
@@ -239,9 +253,9 @@ export class AppView extends LitElement.with($App, State, Query) {
       }
 
       #app_layout > h1 {
-        margin: 0 auto -0.1rem 0.2rem;
+        margin: -0.1rem auto 0 0.1rem;
         font-family: var(--app-font);
-        font-size: 1.75rem;
+        font-size: 2rem;
         font-weight: normal
       }
 
@@ -267,7 +281,7 @@ export class AppView extends LitElement.with($App, State, Query) {
         stroke: red;
         opacity: 0;
         transition: opacity 0.2s ease;
-        background: rgba(255 255 255 / 7%);
+        background: rgba(255 255 255 / 12%);
         border-radius: 100%;
         pointer-events: none;
         z-index: 2;
