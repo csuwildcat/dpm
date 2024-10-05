@@ -9977,7 +9977,7 @@ zoo`.split(`
   .spinner-mixin[spinner-options~="fixed"] {
     position: fixed;
   }
-`,Spinner=kt=>{var At,xt,_s,$s,jt;return jt=class extends kt{constructor(){super();Fn(this,xt);Fn(this,At);let Lt;const Ht=this.firstUpdated;Pn(this,At,new Promise(Vt=>Lt=Vt)),this.firstUpdated=async Vt=>{Lt(),await(Ht==null?void 0:Ht.call(this,Vt))}}async startSpinner(Lt={renderImmediate:!1,minimum:0,fixed:!1}){const Ht=Lt.fixed?"fixed":"";await rn(this,At);const Vt=typeof Lt.target=="string"?this.shadowRoot.querySelector(Lt.target):Lt.target||this.shadowRoot;let zt=Vt.querySelector(".spinner-mixin");if(zt){zt.setAttribute("spinner-show","");return}zt=An(this,xt,$s).call(this),zt.setAttribute("spinner-options",Ht),Vt.append(zt),Lt.minimum&&(zt._spinnerMixinDelay=DOM$1.delay(Lt.minimum)),Lt.renderImmediate?zt.setAttribute("spinner-show",""):DOM$1.skipFrame(()=>zt.setAttribute("spinner-show","")),await DOM$1.delay(transitionDuration)}async stopSpinner(Lt={}){var zt;const Vt=(typeof Lt.target=="string"?this.shadowRoot.querySelector(Lt.target):Lt.target||this.shadowRoot).querySelector(".spinner-mixin");await(Vt==null?void 0:Vt._spinnerMixinDelay),(zt=Vt==null?void 0:Vt.removeAttribute)==null||zt.call(Vt,"spinner-show"),document.visibilityState==="hidden"&&(Vt==null||Vt.remove())}},At=new WeakMap,xt=new WeakSet,_s=function(Lt){Lt.propertyName==="opacity"&&getComputedStyle(Lt.target).opacity==="0"&&Lt.target.remove()},$s=function(){const Lt=document.createElement("div");return Lt.classList.add("spinner-mixin"),Lt.ontransitionend=Ht=>An(this,xt,_s).call(this,Ht),Lt.appendChild(document.createElement("sl-spinner")),Lt},jt};h$2.with=function(...kt){return kt.reduce((At,xt)=>xt(At),this)};function addSchemas(kt){const At=kt.types,xt=kt.protocol;return Object.entries(At).reduce((Bt,[Nt,jt])=>(jt.dataFormats.some(Ut=>Ut.match("json"))&&(Bt[Nt]=At[Nt].schema=xt+"/schemas/"+Nt),Bt),{})}const profileDefinition={published:!0,protocol:"https://areweweb5yet.com/protocols/profile",types:{name:{dataFormats:["application/json"]},social:{dataFormats:["application/json"]},messaging:{dataFormats:["application/json"]},phone:{dataFormats:["application/json"]},address:{dataFormats:["application/json"]},career:{dataFormats:["application/json"]},payment:{dataFormats:["application/json"]},connect:{dataFormats:["application/json"]},avatar:{dataFormats:["image/gif","image/png","image/jpeg"]},hero:{dataFormats:["image/gif","image/png","image/jpeg"]}},structure:{name:{},social:{},career:{},avatar:{},hero:{},messaging:{},address:{},phone:{},payment:{},connect:{}}},profile={uri:profileDefinition.protocol,schemas:addSchemas(profileDefinition),definition:profileDefinition},byUri={[profileDefinition.protocol]:profile},protocols=Object.freeze(Object.defineProperty({__proto__:null,byUri,profile},Symbol.toStringTag,{value:"Module"}));globalThis.URLPattern||await __vitePreload(()=>import("./index-6Ez4sj9Y.js"),[]);const drlCaptureRegexp=/^(?:dweb:\/\/)?(did:[^\/]+)(?:\/protocols\/([^\/]+)\/?)?/,hasBuffers=typeof buffer$2.Buffer<"u",natives={canonicalize:function(kt){var At="";return xt(kt),At;function xt(Bt){if(Bt===null||typeof Bt!="object"||Bt.toJSON!=null)At+=JSON.stringify(Bt);else if(Array.isArray(Bt)){At+="[";let Nt=!1;Bt.forEach(jt=>{Nt&&(At+=","),Nt=!0,xt(jt)}),At+="]"}else{At+="{";let Nt=!1;Object.keys(Bt).sort().forEach(jt=>{Nt&&(At+=","),Nt=!0,At+=JSON.stringify(jt),At+=":",xt(Bt[jt])}),At+="}"}}},deepSet(kt,At,xt){const Bt=At.split("."),Nt=Bt.pop(),jt=Bt.reduce((Ut,Lt)=>Ut[Lt]=Ut[Lt]||{},kt);jt[Nt]=xt},unslash(kt){return kt.endsWith("/")?kt.slice(0,-1):kt},randomString(kt=32){const At="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";let xt="";const Bt=new Uint8Array(kt);return crypto.getRandomValues(Bt),Bt.forEach(Nt=>{xt+=At[Nt%At.length]}),xt},url:{encode:kt=>{let At=[hasBuffers?buffer$2.Buffer.from:btoa](encodeURIComponent(kt).replace(/%([0-9A-F]{2})/g,(xt,Bt)=>String.fromCharCode("0x"+Bt)));return hasBuffers&&(At=At.toString("base64")),At.replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"")},decode:kt=>{let At=kt.replace(/-/g,"+").replace(/_/g,"/");return At=hasBuffers?buffer$2.Buffer.from(At,"base64").toString():atob(At),decodeURIComponent(At.split("").map(xt=>"%"+("00"+xt.charCodeAt(0).toString(16)).slice(-2)).join(""))}},drl:{async cache(kt,At,xt){return await(await caches.open("drl")).put(kt,new Response(xt||await At.data.blob(),{headers:{"Content-Type":At.dataFormat,"dwn-cache-time":Date.now().toString()}})),kt},async fromRecord(kt,At,xt){const Bt=`https://dweb/${kt.author}/records/${kt.id}`;return At&&await this.cache(Bt,kt,xt),Bt},create(kt,{protocol:At="",action:xt="",path:Bt="",params:Nt={},hash:jt="",flushCache:Ut=!1}){let Lt=`https://dweb/${kt}${xt?"/"+xt:""}`;At&&(Lt+="/protocols/"+Convert.string(At).toBase64Url()),Lt+=natives.unslash(Bt.startsWith("/")?Bt:"/"+Bt);const Ht=new URLSearchParams;for(let Vt in Nt){const zt=Nt[Vt];Array.isArray(zt)?zt.forEach(Wt=>Ht.append(Vt,Wt)):Ht.append(Vt,zt)}return Lt+Ht.toString()+(Ut?"?cache-updated="+new Date().getTime():"")+jt},parse(kt,At="*"){const xt=natives.unslash(kt),Bt=new URLPattern({protocol:"dweb",pathname:At}).exec(xt);if(!Bt)return null;const Nt=xt.match(drlCaptureRegexp),jt=Nt==null?void 0:Nt[2];return{did:(Nt==null?void 0:Nt[1])||null,protocol:jt?decodeURIComponent(jt):null,path:Bt.pathname.groups,params:Object.fromEntries(new URLSearchParams(Bt.search.input)),hash:Bt.hash.input}}},worker(kt,At=!1){const xt=new Blob([`
+`,Spinner=kt=>{var At,xt,_s,$s,jt;return jt=class extends kt{constructor(){super();Fn(this,xt);Fn(this,At);let Lt;const Ht=this.firstUpdated;Pn(this,At,new Promise(Vt=>Lt=Vt)),this.firstUpdated=async Vt=>{Lt(),await(Ht==null?void 0:Ht.call(this,Vt))}}async startSpinner(Lt={renderImmediate:!1,minimum:0,fixed:!1}){const Ht=Lt.fixed?"fixed":"";await rn(this,At);const Vt=typeof Lt.target=="string"?this.shadowRoot.querySelector(Lt.target):Lt.target||this.shadowRoot;let zt=Vt.querySelector(".spinner-mixin");if(zt){zt.setAttribute("spinner-show","");return}zt=An(this,xt,$s).call(this),zt.setAttribute("spinner-options",Ht),Vt.append(zt),Lt.minimum&&(zt._spinnerMixinDelay=DOM$1.delay(Lt.minimum)),Lt.renderImmediate?zt.setAttribute("spinner-show",""):DOM$1.skipFrame(()=>zt.setAttribute("spinner-show","")),await DOM$1.delay(transitionDuration)}async stopSpinner(Lt={}){var zt;const Vt=(typeof Lt.target=="string"?this.shadowRoot.querySelector(Lt.target):Lt.target||this.shadowRoot).querySelector(".spinner-mixin");await(Vt==null?void 0:Vt._spinnerMixinDelay),(zt=Vt==null?void 0:Vt.removeAttribute)==null||zt.call(Vt,"spinner-show"),document.visibilityState==="hidden"&&(Vt==null||Vt.remove())}},At=new WeakMap,xt=new WeakSet,_s=function(Lt){Lt.propertyName==="opacity"&&getComputedStyle(Lt.target).opacity==="0"&&Lt.target.remove()},$s=function(){const Lt=document.createElement("div");return Lt.classList.add("spinner-mixin"),Lt.ontransitionend=Ht=>An(this,xt,_s).call(this,Ht),Lt.appendChild(document.createElement("sl-spinner")),Lt},jt};h$2.with=function(...kt){return kt.reduce((At,xt)=>xt(At),this)};function addSchemas(kt){const At=kt.types,xt=kt.protocol;return Object.entries(At).reduce((Bt,[Nt,jt])=>(jt.dataFormats.some(Ut=>Ut.match("json"))&&(Bt[Nt]=At[Nt].schema=xt+"/schemas/"+Nt),Bt),{})}const dpmDefinition={protocol:"https://dpm.software/docs/protocol",published:!0,types:{package:{dataFormats:["application/json"]},icon:{dataFormats:["image/gif","image/png","image/jpeg"]},release:{schema:"https://www.rfc-editor.org/rfc/rfc1952.html",dataFormats:["application/gzip"]},admin:{dataFormats:["application/json"]}},structure:{package:{$tags:{name:{type:"string"},$requiredTags:["name"]},$actions:[{who:"author",of:"package",can:["create","update","delete"]},{role:"package/admin",can:["co-update"]}],admin:{$role:!0,$actions:[{who:"author",of:"package",can:["create","update","delete"]}]},logo:{$actions:[{who:"author",of:"package",can:["create","update","delete","co-update","co-delete"]},{role:"package/admin",can:["create","update","delete","co-update","co-delete"]}]},release:{$tags:{version:{type:"string"},integrity:{type:"string"},$requiredTags:["version","integrity"]},$actions:[{who:"author",of:"package",can:["create","update","delete"]},{role:"package/admin",can:["create","update","delete"]}]}}}},profileDefinition={published:!0,protocol:"https://areweweb5yet.com/protocols/profile",types:{name:{dataFormats:["application/json"]},social:{dataFormats:["application/json"]},messaging:{dataFormats:["application/json"]},phone:{dataFormats:["application/json"]},address:{dataFormats:["application/json"]},career:{dataFormats:["application/json"]},payment:{dataFormats:["application/json"]},connect:{dataFormats:["application/json"]},avatar:{dataFormats:["image/gif","image/png","image/jpeg"]},hero:{dataFormats:["image/gif","image/png","image/jpeg"]}},structure:{name:{},social:{},career:{},avatar:{},hero:{},messaging:{},address:{},phone:{},payment:{},connect:{}}},profile={uri:profileDefinition.protocol,schemas:addSchemas(profileDefinition),definition:profileDefinition},dpm={uri:dpmDefinition.protocol,schemas:addSchemas(dpmDefinition),definition:dpmDefinition},byUri={[profileDefinition.protocol]:profile},protocols=Object.freeze(Object.defineProperty({__proto__:null,byUri,dpm,profile},Symbol.toStringTag,{value:"Module"}));globalThis.URLPattern||await __vitePreload(()=>import("./index-6Ez4sj9Y.js"),[]);const drlCaptureRegexp=/^(?:dweb:\/\/)?(did:[^\/]+)(?:\/protocols\/([^\/]+)\/?)?/,hasBuffers=typeof buffer$2.Buffer<"u",natives={canonicalize:function(kt){var At="";return xt(kt),At;function xt(Bt){if(Bt===null||typeof Bt!="object"||Bt.toJSON!=null)At+=JSON.stringify(Bt);else if(Array.isArray(Bt)){At+="[";let Nt=!1;Bt.forEach(jt=>{Nt&&(At+=","),Nt=!0,xt(jt)}),At+="]"}else{At+="{";let Nt=!1;Object.keys(Bt).sort().forEach(jt=>{Nt&&(At+=","),Nt=!0,At+=JSON.stringify(jt),At+=":",xt(Bt[jt])}),At+="}"}}},deepSet(kt,At,xt){const Bt=At.split("."),Nt=Bt.pop(),jt=Bt.reduce((Ut,Lt)=>Ut[Lt]=Ut[Lt]||{},kt);jt[Nt]=xt},unslash(kt){return kt.endsWith("/")?kt.slice(0,-1):kt},randomString(kt=32){const At="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";let xt="";const Bt=new Uint8Array(kt);return crypto.getRandomValues(Bt),Bt.forEach(Nt=>{xt+=At[Nt%At.length]}),xt},url:{encode:kt=>{let At=[hasBuffers?buffer$2.Buffer.from:btoa](encodeURIComponent(kt).replace(/%([0-9A-F]{2})/g,(xt,Bt)=>String.fromCharCode("0x"+Bt)));return hasBuffers&&(At=At.toString("base64")),At.replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"")},decode:kt=>{let At=kt.replace(/-/g,"+").replace(/_/g,"/");return At=hasBuffers?buffer$2.Buffer.from(At,"base64").toString():atob(At),decodeURIComponent(At.split("").map(xt=>"%"+("00"+xt.charCodeAt(0).toString(16)).slice(-2)).join(""))}},drl:{async cache(kt,At,xt){return await(await caches.open("drl")).put(kt,new Response(xt||await At.data.blob(),{headers:{"Content-Type":At.dataFormat,"dwn-cache-time":Date.now().toString()}})),kt},async fromRecord(kt,At,xt){const Bt=`https://dweb/${kt.author}/records/${kt.id}`;return At&&await this.cache(Bt,kt,xt),Bt},create(kt,{protocol:At="",action:xt="",path:Bt="",params:Nt={},hash:jt="",flushCache:Ut=!1}){let Lt=`https://dweb/${kt}${xt?"/"+xt:""}`;At&&(Lt+="/protocols/"+Convert.string(At).toBase64Url()),Lt+=natives.unslash(Bt.startsWith("/")?Bt:"/"+Bt);const Ht=new URLSearchParams;for(let Vt in Nt){const zt=Nt[Vt];Array.isArray(zt)?zt.forEach(Wt=>Ht.append(Vt,Wt)):Ht.append(Vt,zt)}return Lt+Ht.toString()+(Ut?"?cache-updated="+new Date().getTime():"")+jt},parse(kt,At="*"){const xt=natives.unslash(kt),Bt=new URLPattern({protocol:"dweb",pathname:At}).exec(xt);if(!Bt)return null;const Nt=xt.match(drlCaptureRegexp),jt=Nt==null?void 0:Nt[2];return{did:(Nt==null?void 0:Nt[1])||null,protocol:jt?decodeURIComponent(jt):null,path:Bt.pathname.groups,params:Object.fromEntries(new URLSearchParams(Bt.search.input)),hash:Bt.hash.input}}},worker(kt,At=!1){const xt=new Blob([`
       self.onmessage = function(e) {
         const { data, code } = e.data;
         const execute = new Function('data', code);
@@ -10378,7 +10378,7 @@ sl-tab-group::part(tabs) {
       <div>connected</div>
     `:ke$2`
       <section flex="column center-x center-y">
-        <sl-button variant="default" size="large" @click="${async At=>{At.target.loading=!0;const xt=await DWeb$1.identity.create({});App$1.addIdentity(xt),At.target.loading=!1,router.navigateTo(`/profiles/${xt.did.uri}`)}}">
+        <sl-button variant="default" size="large" @click="${async At=>{At.target.loading=!0;const xt=await DWeb$1.identity.create({});App$1.addIdentity(xt),At.target.loading=!1,router.navigateTo(`/directory/${xt.did.uri}`)}}">
           <sl-icon slot="prefix" name="person-plus"></sl-icon>
           Create a new identity
         </sl-button>
@@ -11443,14 +11443,14 @@ sl-tab-group::part(tabs) {
         }
       }
 
-    `]}customElements.define("profile-view",ProfileView);class FindPage extends h$2.with(State,Query,Spinner){static properties={identities:{store:"page"},did:{type:String}};static query={searchInput:"#search_input",profileView:"#profile_view"};constructor(){super(),this.path={}}onRouteEnter(At,xt){this.path=xt,this.loadDid()}firstUpdated(){this.componentReady=!0,this.loadDid()}async loadDid(){if(this.componentReady){const At=this.path.did;this.did&&!At&&router.navigateTo(`/profiles/${this.did}`),At&&At!==this.did&&(this.searchInput.value=At,await this.startSpinner({minimum:1e3,fixed:!0}),this.did=At)}}async onLoadComplete(){this.stopSpinner()}lookupProfile(At=this.searchInput.value){!At||At===this.did||At!==this.path.did&&router.navigateTo(`/profiles/${At}`)}render(){return ke$2`
+    `]}customElements.define("profile-view",ProfileView);class DirectoryPage extends h$2.with(State,Query,Spinner){static properties={identities:{store:"page"},did:{type:String}};static query={searchInput:"#search_input",profileView:"#profile_view"};constructor(){super(),this.path={}}onRouteEnter(At,xt){this.path=xt,this.loadDid()}firstUpdated(){this.componentReady=!0,this.loadDid()}async loadDid(){if(this.componentReady){const At=this.path.did;this.did&&!At&&router.navigateTo(`/directory/${this.did}`),At&&At!==this.did&&(this.searchInput.value=At,await this.startSpinner({minimum:1e3,fixed:!0}),this.did=At)}}async onLoadComplete(){this.stopSpinner()}lookupProfile(At=this.searchInput.value){!At||At===this.did||At!==this.path.did&&router.navigateTo(`/directory/${At}`)}render(){return ke$2`
       <header id="search_bar" flex="center-y center-x" hide-on-overlay>
         <sl-input id="search_input"
                   clearable
                   value="${to(this.did)}"
                   required
                   size="small"
-                  placeholder="Enter a DID to view a profile"
+                  placeholder="Enter a DID or DPK URI to view a publisher or package"
                   pattern="did:dht:[a-zA-Z0-9]+"
                   @sl-clear="${At=>this.did=""}"
                   @keydown="${At=>At.key==="Enter"&&this.lookupProfile()}"
@@ -11462,7 +11462,7 @@ sl-tab-group::part(tabs) {
         <profile-view id="profile_view" did="${to(this.did)}" @profile-view-load-complete="${this.onLoadComplete}"></profile-view>
         <div id="placeholder" default-content="cover placeholder">
           <sl-icon name="search"></sl-icon>
-          <p>Enter a DID above to view a profile.</p>
+          <p>Enter a DID or DPK URI to view a publisher or package.</p>
         </div>
       </section>
     `}static styles=[PageStyles,SpinnerStyles,i$7`
@@ -11487,7 +11487,7 @@ sl-tab-group::part(tabs) {
         padding: 0 0.8rem 0;
         border-bottom: 1px solid rgba(255 255 255 / 1%);
         box-shadow: 0 2px 1px -1px rgba(0 0 0 / 40%);
-        background: hsl(240deg 7% 15% / 90%);
+        background: hsl(240deg 7% 20% / 90%);
         backdrop-filter: blur(10px) saturate(100%);
         -webkit-backdrop-filter: blur(10px) saturate(100%);
         z-index: 1;
@@ -11557,7 +11557,7 @@ sl-tab-group::part(tabs) {
           background: none;
         }
       }
-    `]}customElements.define("find-page",FindPage);class CreateIdentity extends h$2.with(State,Query){static properties={identities:{store:"page"}};static query={createIdentityLabel:"#create_identity_label",createIdentityButton:"#create_identity_button"};render(){return ke$2`
+    `]}customElements.define("directory-page",DirectoryPage);class CreateIdentity extends h$2.with(State,Query){static properties={identities:{store:"page"}};static query={createIdentityLabel:"#create_identity_label",createIdentityButton:"#create_identity_button"};render(){return ke$2`
       <sl-input id="create_identity_label" label="Add a Label" placeholder="Ex: social, career" pattern="^[a-zA-Z0-9]{3,}$" required></sl-input>
       <sl-button id="create_identity_button" variant="success" @click="${async At=>{const xt=this.createIdentityLabel.value||"";if(!/^[a-zA-Z0-9]{3,}$/.test(xt)){DOM$1.fireEvent(this,"invalid-label");return}if(this.createIdentityButton.loading)return!1;this.createIdentityButton.loading=!0;const Nt=await DWeb$1.identity.create({dwnEndpoints:["http://localhost:3000"]});await DWeb$1.identity.addAutofillDid(xt+"@"+Nt.did.uri),App$1.addIdentity(Nt),this.createIdentityButton.loading=!1,DOM$1.fireEvent(this,"identity-created",{detail:{identity:Nt}})}}">
         Create
@@ -11567,7 +11567,248 @@ sl-tab-group::part(tabs) {
         display: block;
         margin: 1.5rem auto 0;
       }
-    `]}customElements.define("create-identity",CreateIdentity);class IdentitiesPage extends h$2.with(State,Query,Spinner){static properties={ready:{store:"page"},identities:{store:"page"},identityEndpointUpdate:{type:Object}};static query={createIdentityButton:"#create_identity_button",createIdentityModal:["#create_identity_modal",!0],restoreIdentityButton:"#restore_identity_button",modifyEndpointsModal:["#modify_endpoints_modal",!0]};constructor(){super(),this.lastIdentityLabelSave=Date.now(),this.profileProtocolEncoded=Convert.string(profile.uri).toBase64Url()}firstUpdated(){this.ready.state||this.startSpinner({target:"section",minimum:500,renderImmediate:!0}),this.ready.then(()=>{this.stopSpinner()})}toggleIdentityDetails(At){const xt=At.currentTarget,Bt=xt.closest("li").querySelector("detail-box");Bt.toggle(),xt.firstElementChild.name=Bt.open?"chevron-up":"chevron-down"}generateEndpointItems(At,xt,Bt){return(At.did.document.service||[]).reduce((Nt,jt)=>{if(!Nt&&jt.type==="DecentralizedWebNode"){let Ut=jt.serviceEndpoint||[];Ut=Array.isArray(Ut)?Ut:[Ut],Bt&&(Ut=this.identityEndpointUpdate.endpoints=this.identityEndpointUpdate.endpoints||[...Ut]),Nt=xt(Ut,At)}return Nt},null)}openEndpointModal(At){(!this.identityEndpointUpdate||this.identityEndpointUpdate.identity!==At)&&(this.identityEndpointUpdate={identity:At}),this.modifyEndpointsModal.show()}closeEndpointModal(){this.modifyEndpointsModal.hide()}async updateEndpoints(At){if(!this.identityEndpointUpdate)return;const{identity:xt,endpoints:Bt}=this.identityEndpointUpdate;console.log(Bt);try{const Nt=await DWeb.did.update(xt,jt=>{const Ut=jt.service.find(Lt=>Lt.type==="DecentralizedWebNode");Ut&&(Ut.serviceEndpoint=Bt.reduce((Lt,Ht)=>(Ht=Ht.trim(),Ht.length&&Lt.push(Ht),Lt),[])),Ut.serviceEndpoint=Bt});return At&&this.closeEndpointModal(),Nt}catch{}}async saveIdentityLabel(At,xt){var jt,Ut,Lt;console.log(At);let Bt=At.target.value.trim().toLowerCase(),Nt=((Lt=(Ut=(jt=xt.connectRecord)==null?void 0:jt.cache)==null?void 0:Ut.json)==null?void 0:Lt.label)||"";Bt&&Bt!==Nt&&Date.now()>this.lastIdentityLabelSave+2e3&&(this.lastIdentityLabelSave=Date.now(),await App$1.saveIdentityLabel(xt,Bt).then(Ht=>notify.success("Your profile info was saved")).catch(Ht=>{Ht.target.value=Nt,notify.error("There was an error saving your new label for this identity")}))}render(){var xt;const At=Object.values(this.identities||{});return ke$2`
+    `]}customElements.define("create-identity",CreateIdentity);class PackagesPage extends h$2.with(State,Query,Spinner){static properties={ready:{store:"page"},identities:{store:"page"},identityEndpointUpdate:{type:Object}};static query={createIdentityButton:"#create_identity_button",createIdentityModal:["#create_identity_modal",!0],restoreIdentityButton:"#restore_identity_button",modifyEndpointsModal:["#modify_endpoints_modal",!0]};constructor(){super(),this.lastIdentityLabelSave=Date.now(),this.profileProtocolEncoded=Convert.string(profile.uri).toBase64Url()}firstUpdated(){this.ready.state||this.startSpinner({target:"section",minimum:500,renderImmediate:!0}),this.ready.then(()=>{this.stopSpinner()})}toggleIdentityDetails(At){const xt=At.currentTarget,Bt=xt.closest("li").querySelector("detail-box");Bt.toggle(),xt.firstElementChild.name=Bt.open?"chevron-up":"chevron-down"}generateEndpointItems(At,xt,Bt){return(At.did.document.service||[]).reduce((Nt,jt)=>{if(!Nt&&jt.type==="DecentralizedWebNode"){let Ut=jt.serviceEndpoint||[];Ut=Array.isArray(Ut)?Ut:[Ut],Bt&&(Ut=this.identityEndpointUpdate.endpoints=this.identityEndpointUpdate.endpoints||[...Ut]),Nt=xt(Ut,At)}return Nt},null)}openEndpointModal(At){(!this.identityEndpointUpdate||this.identityEndpointUpdate.identity!==At)&&(this.identityEndpointUpdate={identity:At}),this.modifyEndpointsModal.show()}closeEndpointModal(){this.modifyEndpointsModal.hide()}async updateEndpoints(At){if(!this.identityEndpointUpdate)return;const{identity:xt,endpoints:Bt}=this.identityEndpointUpdate;console.log(Bt);try{const Nt=await DWeb.did.update(xt,jt=>{const Ut=jt.service.find(Lt=>Lt.type==="DecentralizedWebNode");Ut&&(Ut.serviceEndpoint=Bt.reduce((Lt,Ht)=>(Ht=Ht.trim(),Ht.length&&Lt.push(Ht),Lt),[])),Ut.serviceEndpoint=Bt});return At&&this.closeEndpointModal(),Nt}catch{}}async saveIdentityLabel(At,xt){var jt,Ut,Lt;let Bt=At.target.value.trim().toLowerCase(),Nt=((Lt=(Ut=(jt=xt.connectRecord)==null?void 0:jt.cache)==null?void 0:Ut.json)==null?void 0:Lt.label)||"";Bt&&Bt!==Nt&&Date.now()>this.lastIdentityLabelSave+2e3&&(this.lastIdentityLabelSave=Date.now(),await App$1.saveIdentityLabel(xt,Bt).then(Ht=>notify.success("Your profile info was saved")).catch(Ht=>{Ht.target.value=Nt,notify.error("There was an error saving your new label for this identity")}))}render(){var At;return Object.values(this.packages||{}),ke$2`
+      <section page-section>
+        ${identities!=null&&identities.length?ke$2`
+            <h2 flex>
+              Identities
+
+              <sl-dropdown id="identity_actions">
+                <sl-button size="small" slot="trigger" caret>Actions</sl-button>
+                <sl-menu>
+                  <sl-menu-item @click="${xt=>this.createIdentityModal.show()}">
+                    <sl-icon slot="prefix" name="person-plus"></sl-icon> Create an Identity
+                  </sl-menu-item>
+                  <sl-menu-item @click="${xt=>App$1.restoreIdentityModal.show()}">
+                    <sl-icon slot="prefix" name="person-up"></sl-icon> Restore an Identity
+                  </sl-menu-item>
+                  <sl-menu-item @click="${xt=>App$1.qrScannerModal.show()}">
+                    <sl-icon slot="prefix" name="window-stack"></sl-icon> Connect an App
+                  </sl-menu-item>
+                </sl-menu>
+              </sl-dropdown>
+
+            </h2>
+            <ul id="identity_list" limit-width>
+              ${identities.map(xt=>{var Nt,jt,Ut;const Bt=xt.connectedDid;return ke$2`
+                <li>
+                  <div flex="center-y">
+                    <a href="/${Bt}">
+                      <sl-avatar image="${xt.avatar||`https://dweb/${Bt}/read/protocols/${this.profileProtocolEncoded}/avatar`}" shape="circle" size="small"></sl-avatar>
+                      ${Bt}
+                    </a> 
+                    <sl-button detail-box-toggle circle size="small" @click="${this.toggleIdentityDetails}">
+                      <sl-icon name="chevron-down"></sl-icon>
+                    </sl-button>
+                  </div>
+                  <detail-box hide-toggle>
+                    <div>
+                      <div columns="2 labels-right">
+                        <span>Identity Label:</span>
+                        <div>
+                          <sl-input size="small" value="${(Ut=(jt=(Nt=xt==null?void 0:xt.connectRecord)==null?void 0:Nt.cache)==null?void 0:jt.json)==null?void 0:Ut.label}" autocomplete="off" placeholder="Ex: social, career, family" 
+                            @sl-input="${Lt=>Lt.target.value=Lt.target.value.trim().toLowerCase()}"
+                            @sl-change="${Lt=>this.saveIdentityLabel(Lt,xt)}"
+                          ></sl-input>
+                        </div>
+
+                        <span>Backup:</span>
+                        <div>
+                          <sl-button size="small" @click="${Lt=>DWeb.identity.backup(xt,{to:"file"})}">
+                            <sl-icon slot="prefix" name="download"></sl-icon> Download identity backup
+                          </sl-button>
+                        </div>
+                      </div>
+
+                      <h3 flex="center-y">
+                        <span>Datastore Locations</span>
+                        <sl-icon-button name="pencil" variant="default" size="medium" @click="${Lt=>this.openEndpointModal(xt)}"></sl-icon-button>
+                      </h3>
+                      ${this.generateEndpointItems(xt,Lt=>ke$2`<div>${Lt.join("<br>")}</div>`)}
+                    </div>
+                  </detail-box>
+                </li>
+              `})}
+            </ul>
+            <!-- <div id="create_restore_buttons" flex="center-x center-y">
+              <sl-button id="create_identity_button" variant="success" size="small" @click="${xt=>this.createIdentityModal.show()}">
+                <sl-icon slot="prefix" name="person-plus"></sl-icon> Create an Identity
+              </sl-button>
+              <sl-button id="restore_identity_button" variant="primary" size="small" @click="${xt=>App$1.restoreIdentityModal.show()}">
+                <sl-icon slot="prefix" name="person-up"></sl-icon> Restore an Identity
+              </sl-button>
+              <sl-button id="restore_identity_button" variant="primary" size="small" @click="${xt=>App$1.qrScannerModal.show()}">
+                <sl-icon slot="prefix" name="window-stack"></sl-icon> Connect an App
+              </sl-button>
+            </div> -->
+          `:ke$2`
+            <connect-widget></connect-widget>
+          `}
+      </section>
+
+      <sl-dialog id="create_identity_modal" label="Create an Identity" placement="start" fit-content>
+        <create-identity @identity-created="${xt=>this.createIdentityModal.hide()}"></create-identity>
+      </sl-dialog>
+
+      <sl-dialog id="modify_endpoints_modal" label="Modify Endpoints" placement="start" @sl-after-hide="${xt=>this.identityEndpointUpdate=null}">
+        <div id="modify_endpoints_identity" flex="center-y">
+          ${this.identityEndpointUpdate?ke$2`
+                <sl-avatar image="${((At=this.identityEndpointUpdate.identity)==null?void 0:At.avatar)||`https://dweb/${this.identityEndpointUpdate.identity.connectedDid}/read/protocols/${this.profileProtocolEncoded}/avatar`}" shape="circle" size="small"></sl-avatar>
+                <div>${this.identityEndpointUpdate.identity.connectedDid}</div>
+              `:D$1}
+        </div>
+        <p>This is an advanced feature to edit the datastore locations of the DID above. Do not change these values unless you know what you are doing.</p>
+        <section>
+          ${this.identityEndpointUpdate?this.generateEndpointItems(this.identityEndpointUpdate.identity,xt=>xt.map((Bt,Nt)=>ke$2`
+                  <div index="${Nt}" class="service-endpoint-entry" flex="center-y">
+
+                    <sl-input class="service-endpoint-input" size="small" value="${Bt}" @input="${jt=>{xt[Nt]=jt.target.value}}"></sl-input>
+
+                    <sl-button class="remove-endpoint-button" size="small" @click="${jt=>{xt.splice(Nt,1),this.identityEndpointUpdate={...this.identityEndpointUpdate}}}">
+                        <sl-icon slot="prefix" name="x-lg">
+                      </sl-icon>
+                    </sl-button>
+
+                    <sl-button class="add-endpoint-button" size="small" @click="${jt=>{xt.push(""),this.identityEndpointUpdate={...this.identityEndpointUpdate}}}">
+                      <sl-icon slot="prefix" name="plus-lg"></sl-icon>
+                    </sl-button>
+                  </div>
+                `),!0):D$1}
+        </section>
+        <sl-button id="close_endpoints_button" slot="footer" @click="${async xt=>this.closeEndpointModal()}">Close</sl-button>
+        <sl-button id="submit_endpoints_button" slot="footer" variant="success" @click="${async xt=>this.updateEndpoints(!0)}">Submit</sl-button>
+      </sl-dialog>
+
+      
+    `}static styles=[PageStyles,SpinnerStyles,i$7`
+      :host > section {
+        
+      }
+
+      #identity_actions {
+        margin-left: auto;
+      }
+
+      connect-widget {
+        align-self: center;
+      }
+
+      #identity_list li {
+        --border: 1px solid rgb(255 255 255 / 8%);
+        list-style: none;
+        border-bottom: var(--border);
+      }
+
+      #identity_list li:first-child {
+        border-top: var(--border);
+      } 
+
+      #identity_list a {
+        width: 100%;
+        padding: 1.1rem 0 1rem;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-decoration: none;
+        color: var(--sl-color-blue-700);
+        cursor: pointer;
+      }
+
+      #identity_list sl-avatar {
+        --size: 2.25rem;
+        margin: 0 0.5rem 0 0;
+      }
+
+      #identity_list [detail-box-toggle] {
+        margin: 0 0 0 0.75rem;
+      }
+
+      #identity_list detail-box {
+        max-height: 0;
+      }
+
+      #identity_list detail-box > :first-child {
+        margin-bottom: 1rem;
+        padding: 1.2rem 1.1rem;
+        background: rgb(183 192 254 / 4%);
+        border: 1px solid rgb(183 192 254 / 9%);
+        border-radius: 5px;
+      }
+
+      #identity_list detail-box h3 {
+        margin: 1.75rem 0 1rem;
+        border-bottom: 1px solid rgba(255 255 255 / 8%);
+        padding: 0 0 0.25rem;
+      }
+
+      #identity_list detail-box h3 :not(span) {
+        margin: 0 0 0 auto;
+      }
+
+      #create_restore_buttons {
+        margin: 2rem 0 0;
+      }
+
+      #create_restore_buttons sl-button {
+        margin: 0 0.5rem;
+      }
+
+    /* Modify Endpoints Dialog */
+
+      #modify_endpoints_modal::part(panel) {
+        max-width: 500px;
+      }
+
+      .service-endpoint-entry:not(:last-child) {
+        margin-bottom: 1rem;
+      }
+
+      .service-endpoint-input {
+        flex: 1;
+        margin: 0;
+      }
+
+      .service-endpoint-input ~ sl-button {
+        margin: 0 0 0 0.5rem;
+      }
+
+      .service-endpoint-entry sl-icon {
+        stroke: currentColor;
+      }
+
+      .service-endpoint-entry .remove-endpoint-button::part(base) {
+        color: #ff2e2e;
+      }
+
+      .service-endpoint-entry .add-endpoint-button::part(base) {
+        color: #00ba00;
+      }
+
+      .service-endpoint-entry:not(:last-child) .add-endpoint-button {
+        visibility: hidden;
+        pointer-events: none;
+      }
+
+      #modify_endpoints_identity sl-avatar {
+        --size: 2.25rem;
+        margin: 0 0.6rem 0 0;
+      }
+
+      #modify_endpoints_identity div {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      #modify_endpoints_modal p {
+        margin: 1rem 0 1.5rem;
+        color: var(--sl-color-red-700);
+      }
+
+      @media(max-width: 800px) {
+
+      }
+    `]}customElements.define("packages-page",PackagesPage);class IdentitiesPage extends h$2.with(State,Query,Spinner){static properties={ready:{store:"page"},identities:{store:"page"},identityEndpointUpdate:{type:Object}};static query={createIdentityButton:"#create_identity_button",createIdentityModal:["#create_identity_modal",!0],restoreIdentityButton:"#restore_identity_button",modifyEndpointsModal:["#modify_endpoints_modal",!0]};constructor(){super(),this.lastIdentityLabelSave=Date.now(),this.profileProtocolEncoded=Convert.string(profile.uri).toBase64Url()}firstUpdated(){this.ready.state||this.startSpinner({target:"section",minimum:500,renderImmediate:!0}),this.ready.then(()=>{this.stopSpinner()})}toggleIdentityDetails(At){const xt=At.currentTarget,Bt=xt.closest("li").querySelector("detail-box");Bt.toggle(),xt.firstElementChild.name=Bt.open?"chevron-up":"chevron-down"}generateEndpointItems(At,xt,Bt){return(At.did.document.service||[]).reduce((Nt,jt)=>{if(!Nt&&jt.type==="DecentralizedWebNode"){let Ut=jt.serviceEndpoint||[];Ut=Array.isArray(Ut)?Ut:[Ut],Bt&&(Ut=this.identityEndpointUpdate.endpoints=this.identityEndpointUpdate.endpoints||[...Ut]),Nt=xt(Ut,At)}return Nt},null)}openEndpointModal(At){(!this.identityEndpointUpdate||this.identityEndpointUpdate.identity!==At)&&(this.identityEndpointUpdate={identity:At}),this.modifyEndpointsModal.show()}closeEndpointModal(){this.modifyEndpointsModal.hide()}async updateEndpoints(At){if(!this.identityEndpointUpdate)return;const{identity:xt,endpoints:Bt}=this.identityEndpointUpdate;console.log(Bt);try{const Nt=await DWeb.did.update(xt,jt=>{const Ut=jt.service.find(Lt=>Lt.type==="DecentralizedWebNode");Ut&&(Ut.serviceEndpoint=Bt.reduce((Lt,Ht)=>(Ht=Ht.trim(),Ht.length&&Lt.push(Ht),Lt),[])),Ut.serviceEndpoint=Bt});return At&&this.closeEndpointModal(),Nt}catch{}}async saveIdentityLabel(At,xt){var jt,Ut,Lt;console.log(At);let Bt=At.target.value.trim().toLowerCase(),Nt=((Lt=(Ut=(jt=xt.connectRecord)==null?void 0:jt.cache)==null?void 0:Ut.json)==null?void 0:Lt.label)||"";Bt&&Bt!==Nt&&Date.now()>this.lastIdentityLabelSave+2e3&&(this.lastIdentityLabelSave=Date.now(),await App$1.saveIdentityLabel(xt,Bt).then(Ht=>notify.success("Your profile info was saved")).catch(Ht=>{Ht.target.value=Nt,notify.error("There was an error saving your new label for this identity")}))}render(){var xt;const At=Object.values(this.identities||{});return ke$2`
       <section page-section>
         ${At!=null&&At.length?ke$2`
             <h2 flex>
@@ -11593,7 +11834,7 @@ sl-tab-group::part(tabs) {
               ${At.map(Bt=>{var jt,Ut,Lt;const Nt=Bt.connectedDid;return ke$2`
                 <li>
                   <div flex="center-y">
-                    <a href="/profiles/${Nt}">
+                    <a href="/directory/${Nt}">
                       <sl-avatar image="${Bt.avatar||`https://dweb/${Nt}/read/protocols/${this.profileProtocolEncoded}/avatar`}" shape="circle" size="small"></sl-avatar>
                       ${Nt}
                     </a> 
@@ -11808,23 +12049,28 @@ sl-tab-group::part(tabs) {
       @media(max-width: 800px) {
 
       }
-    `]}customElements.define("identities-page",IdentitiesPage);activatePolyfills();class AppView extends h$2.with($App,State,Query){static query={appLayout:["#app_layout",!0],connectModal:["#connect_modal",!0],pages:["#pages",!0],connectPage:["#connect",!0],connectRequestModal:["#connect_request_modal",!0],pinModal:["#pin_modal",!0],pinModalContent:["#pin_modal_content",!0],profilePage:["#profile",!0],directoryPage:["#directory",!0],identitiesPage:["#identities",!0],restoreIdentityModal:["#restore_identity_modal",!0],restoreUploader:["#restore_uploader",!0],qrScannerModal:["#qr_scanner_modal",!0],qrScanner:["#qr_scanner",!0]};constructor(){super(),this.router=globalThis.router=new AppRouter(this,{onRouteChange:async(At,xt)=>{this.appLayout&&matchMedia("(max-width: 800px)").matches&&(this.appLayout.drawerOpened=!1)},routes:[{path:"/",component:"#identities"},{path:"/profiles(/)?:did?",component:"#find"},{path:"/dweb-connect(/.*)?",component:"#connect"}]}),DOM$1.addEventDelegate("sl-show","sl-dialog",(At,xt)=>{document.documentElement.setAttribute("overlay-active","")}),DOM$1.addEventDelegate("sl-hide","sl-dialog",(At,xt)=>{document.documentElement.removeAttribute("overlay-active")})}async handleWalletConnectFlow(At){const xt=new URL(At.detail.data),Bt=xt.searchParams.get("request_uri"),Nt=xt.searchParams.get("encryption_key"),jt=await Oidc.getAuthRequest(Bt,Nt),Ut=document.createElement("connect-request");Ut.request=jt,Ut.addEventListener("connect-pin",async Lt=>{this.pinModalContent.innerHTML=Lt.detail.pin,this.pinModal.show()}),this.connectRequestModal.appendChild(Ut),this.connectRequestModal.show()}async handleRestoreUpload(At){if(!(!this.restoreUploader||!this.restoreUploader.files.length)){try{const xt=await DWeb$1.identity.restore({from:"file",files:this.restoreUploader.files});xt&&await App.addIdentity(xt),this.restoreIdentityModal.hide()}catch(xt){console.log(xt)}this.restoreUploader.files=[]}}render(){var At;return ke$2`
+    `]}customElements.define("identities-page",IdentitiesPage);activatePolyfills();class AppView extends h$2.with($App,State,Query){static query={appLayout:["#app_layout",!0],connectModal:["#connect_modal",!0],pages:["#pages",!0],connectPage:["#connect",!0],connectRequestModal:["#connect_request_modal",!0],pinModal:["#pin_modal",!0],pinModalContent:["#pin_modal_content",!0],profilePage:["#profile",!0],directoryPage:["#directory",!0],identitiesPage:["#identities",!0],restoreIdentityModal:["#restore_identity_modal",!0],restoreUploader:["#restore_uploader",!0],qrScannerModal:["#qr_scanner_modal",!0],qrScanner:["#qr_scanner",!0]};constructor(){super(),this.router=globalThis.router=new AppRouter(this,{onRouteChange:async(At,xt)=>{this.appLayout&&matchMedia("(max-width: 800px)").matches&&(this.appLayout.drawerOpened=!1)},routes:[{path:"/",component:"#directory"},{path:"/directory/:did(did:.*)?",component:"#directory"},{path:"/identities",component:"#identities"},{path:"/packages",component:"#packages"},{path:"/dweb-connect(/.*)?",component:"#connect"}]}),DOM$1.addEventDelegate("sl-show","sl-dialog",(At,xt)=>{document.documentElement.setAttribute("overlay-active","")}),DOM$1.addEventDelegate("sl-hide","sl-dialog",(At,xt)=>{document.documentElement.removeAttribute("overlay-active")})}async handleWalletConnectFlow(At){const xt=new URL(At.detail.data),Bt=xt.searchParams.get("request_uri"),Nt=xt.searchParams.get("encryption_key"),jt=await Oidc.getAuthRequest(Bt,Nt),Ut=document.createElement("connect-request");Ut.request=jt,Ut.addEventListener("connect-pin",async Lt=>{this.pinModalContent.innerHTML=Lt.detail.pin,this.pinModal.show()}),this.connectRequestModal.appendChild(Ut),this.connectRequestModal.show()}async handleRestoreUpload(At){if(!(!this.restoreUploader||!this.restoreUploader.files.length)){try{const xt=await DWeb$1.identity.restore({from:"file",files:this.restoreUploader.files});xt&&await App.addIdentity(xt),this.restoreIdentityModal.hide()}catch(xt){console.log(xt)}this.restoreUploader.files=[]}}render(){var At;return ke$2`
 
 
     <vaadin-app-layout id="app_layout">
       
       <sl-icon slot="navbar" id="nav_toggle" name="list" @click="${xt=>this.appLayout.drawerOpened=!0}"></sl-icon>
-      <sl-icon slot="navbar" id="logo_icon" name="app-logo"></sl-icon>
-      <h1 slot="navbar">Aliased</h1>
+      <!-- <sl-icon slot="navbar" id="logo_icon" name="app-logo"></sl-icon> -->
+      <h1 slot="navbar">dpm</h1>
 
       <nav id="nav" slot="drawer" @click="${xt=>{var Bt;return(Bt=this.nav)==null?void 0:Bt.removeAttribute("open")}}">
+        
         <a href="/" ?active="${location.pathname==="/"}">
-          <sl-icon slot="prefix" name="people"></sl-icon>
-          My IDs
-        </a>
-        <a href="/profiles" ?active="${location.pathname.startsWith("/profiles")}">
           <sl-icon slot="prefix" name="search"></sl-icon>
           Find
+        </a>
+        <a href="/packages" ?active="${location.pathname.startsWith("/packages")}">
+          <sl-icon slot="prefix" name="box-seam"></sl-icon>
+          My Packages
+        </a>
+        <a href="/identities" ?active="${location.pathname.startsWith("/identities")}">
+          <sl-icon slot="prefix" name="people"></sl-icon>
+          My IDs
         </a>
       </nav>
       <sl-button id="drawer_close_button" variant="text" @click="${xt=>this.appLayout.drawerOpened=!1}">
@@ -11832,7 +12078,7 @@ sl-tab-group::part(tabs) {
       </sl-button>
       
 
-      <find-page id="find" page="full-width"></find-page>
+      <directory-page id="directory" page="full-width"></directory-page>
       <identities-page id="identities" page></identities-page>
       <connect-page id="connect" page></connect-page>
 
@@ -11897,7 +12143,7 @@ sl-tab-group::part(tabs) {
         height: var(--header-height);
         min-height: var(--header-height);
         padding: 0 0.65rem;
-        background: #17456d;
+        background: #cb0101;
         box-shadow: 0 0 2px 1px rgba(0 0 0 / 25%);
         user-select: none;
       }
@@ -11923,9 +12169,9 @@ sl-tab-group::part(tabs) {
       }
 
       #app_layout > h1 {
-        margin: 0 auto -0.1rem 0.2rem;
+        margin: -0.1rem auto 0 0.1rem;
         font-family: var(--app-font);
-        font-size: 1.75rem;
+        font-size: 2rem;
         font-weight: normal
       }
 
@@ -11951,7 +12197,7 @@ sl-tab-group::part(tabs) {
         stroke: red;
         opacity: 0;
         transition: opacity 0.2s ease;
-        background: rgba(255 255 255 / 7%);
+        background: rgba(255 255 255 / 12%);
         border-radius: 100%;
         pointer-events: none;
         z-index: 2;
