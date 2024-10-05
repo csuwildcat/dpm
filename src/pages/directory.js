@@ -11,7 +11,7 @@ import { profile } from '../utils/protocols';
 
 const didExtractionRegex = /did:[^/?]+/
 
-export class FindPage extends LitElement.with(State, Query, Spinner) {
+export class DirectoryPage extends LitElement.with(State, Query, Spinner) {
 
   static properties = {
     identities: { store: 'page' },
@@ -42,7 +42,7 @@ export class FindPage extends LitElement.with(State, Query, Spinner) {
     if (this.componentReady) {
       const did = this.path.did;
       if (this.did && !did) {
-        router.navigateTo(`/profiles/${this.did}`);
+        router.navigateTo(`/directory/${this.did}`);
       }
       if (did && did !== this.did) {
         this.searchInput.value = did;
@@ -61,11 +61,9 @@ export class FindPage extends LitElement.with(State, Query, Spinner) {
       return;
     }
     if (did !== this.path.did) {
-      router.navigateTo(`/profiles/${did}`);
+      router.navigateTo(`/directory/${did}`);
     }
   }
-
-  //did:dht:af8pitiscusuemezfznbk1gg36fywxxrxu1kjms4fxifbhkeaozo
 
   render() {
     return html`
@@ -75,7 +73,7 @@ export class FindPage extends LitElement.with(State, Query, Spinner) {
                   value="${ifDefined(this.did)}"
                   required
                   size="small"
-                  placeholder="Enter a DID to view a profile"
+                  placeholder="Enter a DID or DPK URI to view a publisher or package"
                   pattern="did:dht:[a-zA-Z0-9]+"
                   @sl-clear="${ e => this.did = '' }"
                   @keydown="${ e => e.key === 'Enter' && this.lookupProfile() }"
@@ -89,7 +87,7 @@ export class FindPage extends LitElement.with(State, Query, Spinner) {
         <profile-view id="profile_view" did="${ifDefined(this.did)}" @profile-view-load-complete="${this.onLoadComplete}"></profile-view>
         <div id="placeholder" default-content="cover placeholder">
           <sl-icon name="search"></sl-icon>
-          <p>Enter a DID above to view a profile.</p>
+          <p>Enter a DID or DPK URI to view a publisher or package.</p>
         </div>
       </section>
     `
@@ -121,7 +119,7 @@ export class FindPage extends LitElement.with(State, Query, Spinner) {
         padding: 0 0.8rem 0;
         border-bottom: 1px solid rgba(255 255 255 / 1%);
         box-shadow: 0 2px 1px -1px rgba(0 0 0 / 40%);
-        background: hsl(240deg 7% 15% / 90%);
+        background: hsl(240deg 7% 20% / 90%);
         backdrop-filter: blur(10px) saturate(100%);
         -webkit-backdrop-filter: blur(10px) saturate(100%);
         z-index: 1;
@@ -195,4 +193,4 @@ export class FindPage extends LitElement.with(State, Query, Spinner) {
   ]
 }
 
-customElements.define('find-page', FindPage)
+customElements.define('directory-page', DirectoryPage)

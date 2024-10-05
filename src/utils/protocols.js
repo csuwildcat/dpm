@@ -11,101 +11,87 @@ function addSchemas(config) {
 }
 
 
-const socialDefinition = {
-  published: true,
-  protocol: 'https://areweweb5yet.com/protocols/social',
-  types: {
-    "aggregators": {
-      "dataFormats": ["application/json"]
+const dpmDefinition = {
+  protocol  : 'https://dpm.software/docs/protocol',
+  published : true,
+  types     : {
+    package : {
+      dataFormats : ['application/json'],
     },
-    "follow": {
-      "dataFormats": ["application/json"]
+    icon : {
+      dataFormats : ['image/gif', 'image/png', 'image/jpeg']
     },
-    "story": {
-      "dataFormats": ["application/json"]
+    release : {
+      schema      : 'https://www.rfc-editor.org/rfc/rfc1952.html',
+      dataFormats : ['application/gzip'],
     },
-    "comment": {
-      "dataFormats": ["application/json"]
-    },
-    "thread": {
-      "dataFormats": ["application/json"]
-    },
-    "reply": {
-      "dataFormats": ["application/json"]
-    },
-    "media": {
-      "dataFormats": ["image/gif", "image/png", "image/jpeg", "video/mp4"]
+    admin : {
+      dataFormats : ['application/json']
     }
   },
-  structure: {
-    aggregators: {},
-    follow: {
-      $role: true
-    },
-    story: {
-      media: {
-        $actions: [
+  structure : {
+    package : {
+      $tags : {
+        name : {
+          type : 'string',
+        },
+        $requiredTags : ['name'],
+      },
+      $actions : [
+        {
+          who : 'author',
+          of: 'package',
+          can : ['create', 'update', 'delete'],
+        },
+        {
+          role : 'package/admin',
+          can : ['co-update']
+        }
+      ],
+      admin: {
+        $role: true,
+        $actions : [
           {
-            who: 'author',
-            of: 'story',
-            can: ['create', 'update', 'delete']
+            who : 'author',
+            of: 'package',
+            can : ['create', 'update', 'delete'],
           }
         ]
       },
-      comment: {
-        $actions: [
+      logo: {
+        $actions : [
           {
-            who: 'anyone',
-            can: ['create', 'update', 'delete']
+            who : 'author',
+            of: 'package',
+            can : ['create', 'update', 'delete', 'co-update', 'co-delete']
           },
           {
-            who: 'author',
-            of: 'story',
-            can: ['co-delete']
-          }
-        ],
-        media: {
-          $actions: [
-            {
-              who: 'author',
-              of: 'story/comment',
-              can: ['create', 'update', 'delete']
-            },
-            {
-              who: 'author',
-              of: 'story',
-              can: ['co-delete']
-            }
-          ]
-        }
-      }
-    },
-    thread: {
-      media: {
-        $actions: [
-          {
-            who: 'author',
-            of: 'thread',
-            can: ['create', 'update', 'delete']
+            role : 'package/admin',
+            can : ['create', 'update', 'delete', 'co-update', 'co-delete']
           }
         ]
       },
-      reply: {
-        $actions: [
+      release: {
+        $tags : {
+          version : {
+            type : 'string',
+          },
+          integrity : {
+            type : 'string',
+          },
+          $requiredTags : ['version', 'integrity']
+        },
+        $actions : [
           {
-            who: 'anyone',
-            can: ['create', 'update', 'delete']
+            who : 'author',
+            of: 'package',
+            can : ['create', 'update', 'delete']
+          },
+          {
+            role : 'package/admin',
+            can : ['create', 'update', 'delete']
           }
-        ],
-        media: {
-          $actions: [
-            {
-              who: 'author',
-              of: 'thread/reply',
-              can: ['create', 'update', 'delete']
-            }
-          ]
-        }
+        ]
       }
     }
   }
@@ -168,11 +154,11 @@ export const profile = {
   definition: profileDefinition
 }
 
-// export const social = {
-//   uri: socialDefinition.protocol,
-//   schemas: addSchemas(socialDefinition),
-//   definition: socialDefinition
-// }
+export const dpm = {
+  uri: dpmDefinition.protocol,
+  schemas: addSchemas(dpmDefinition),
+  definition: dpmDefinition
+}
 
 export const byUri = {
   [profileDefinition.protocol]: profile,

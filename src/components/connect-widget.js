@@ -68,7 +68,7 @@ export class ConnectWidget extends LitElement.with(State, Query, Spinner) {
           });
           App.addIdentity(identity);
           e.target.loading = false;
-          router.navigateTo(`/profiles/${identity.did.uri}`);
+          router.navigateTo(`/directory/${identity.did.uri}`);
         }}">
           <sl-icon slot="prefix" name="person-plus"></sl-icon>
           Create a new identity
