@@ -9977,7 +9977,7 @@ zoo`.split(`
   .spinner-mixin[spinner-options~="fixed"] {
     position: fixed;
   }
-`,Spinner=kt=>{var At,xt,_s,$s,jt;return jt=class extends kt{constructor(){super();Fn(this,xt);Fn(this,At);let Lt;const Ht=this.firstUpdated;Pn(this,At,new Promise(Vt=>Lt=Vt)),this.firstUpdated=async Vt=>{Lt(),await(Ht==null?void 0:Ht.call(this,Vt))}}async startSpinner(Lt={renderImmediate:!1,minimum:0,fixed:!1}){const Ht=Lt.fixed?"fixed":"";await rn(this,At);const Vt=typeof Lt.target=="string"?this.shadowRoot.querySelector(Lt.target):Lt.target||this.shadowRoot;let zt=Vt.querySelector(".spinner-mixin");if(zt){zt.setAttribute("spinner-show","");return}zt=An(this,xt,$s).call(this),zt.setAttribute("spinner-options",Ht),Vt.append(zt),Lt.minimum&&(zt._spinnerMixinDelay=DOM$1.delay(Lt.minimum)),Lt.renderImmediate?zt.setAttribute("spinner-show",""):DOM$1.skipFrame(()=>zt.setAttribute("spinner-show","")),await DOM$1.delay(transitionDuration)}async stopSpinner(Lt={}){var zt;const Vt=(typeof Lt.target=="string"?this.shadowRoot.querySelector(Lt.target):Lt.target||this.shadowRoot).querySelector(".spinner-mixin");await(Vt==null?void 0:Vt._spinnerMixinDelay),(zt=Vt==null?void 0:Vt.removeAttribute)==null||zt.call(Vt,"spinner-show"),document.visibilityState==="hidden"&&(Vt==null||Vt.remove())}},At=new WeakMap,xt=new WeakSet,_s=function(Lt){Lt.propertyName==="opacity"&&getComputedStyle(Lt.target).opacity==="0"&&Lt.target.remove()},$s=function(){const Lt=document.createElement("div");return Lt.classList.add("spinner-mixin"),Lt.ontransitionend=Ht=>An(this,xt,_s).call(this,Ht),Lt.appendChild(document.createElement("sl-spinner")),Lt},jt};h$2.with=function(...kt){return kt.reduce((At,xt)=>xt(At),this)};function addSchemas(kt){const At=kt.types,xt=kt.protocol;return Object.entries(At).reduce((Bt,[Nt,jt])=>(jt.dataFormats.some(Ut=>Ut.match("json"))&&(Bt[Nt]=At[Nt].schema=xt+"/schemas/"+Nt),Bt),{})}const dpmDefinition={protocol:"https://dpm.software/docs/protocol",published:!0,types:{package:{dataFormats:["application/json"]},icon:{dataFormats:["image/gif","image/png","image/jpeg"]},release:{schema:"https://www.rfc-editor.org/rfc/rfc1952.html",dataFormats:["application/gzip"]},admin:{dataFormats:["application/json"]}},structure:{package:{$tags:{name:{type:"string"},$requiredTags:["name"]},$actions:[{who:"author",of:"package",can:["create","update","delete"]},{role:"package/admin",can:["co-update"]}],admin:{$role:!0,$actions:[{who:"author",of:"package",can:["create","update","delete"]}]},logo:{$actions:[{who:"author",of:"package",can:["create","update","delete","co-update","co-delete"]},{role:"package/admin",can:["create","update","delete","co-update","co-delete"]}]},release:{$tags:{version:{type:"string"},integrity:{type:"string"},$requiredTags:["version","integrity"]},$actions:[{who:"author",of:"package",can:["create","update","delete"]},{role:"package/admin",can:["create","update","delete"]}]}}}},profileDefinition={published:!0,protocol:"https://areweweb5yet.com/protocols/profile",types:{name:{dataFormats:["application/json"]},social:{dataFormats:["application/json"]},messaging:{dataFormats:["application/json"]},phone:{dataFormats:["application/json"]},address:{dataFormats:["application/json"]},career:{dataFormats:["application/json"]},payment:{dataFormats:["application/json"]},connect:{dataFormats:["application/json"]},avatar:{dataFormats:["image/gif","image/png","image/jpeg"]},hero:{dataFormats:["image/gif","image/png","image/jpeg"]}},structure:{name:{},social:{},career:{},avatar:{},hero:{},messaging:{},address:{},phone:{},payment:{},connect:{}}},profile={uri:profileDefinition.protocol,schemas:addSchemas(profileDefinition),definition:profileDefinition},dpm={uri:dpmDefinition.protocol,schemas:addSchemas(dpmDefinition),definition:dpmDefinition},byUri={[profileDefinition.protocol]:profile},protocols=Object.freeze(Object.defineProperty({__proto__:null,byUri,dpm,profile},Symbol.toStringTag,{value:"Module"}));globalThis.URLPattern||await __vitePreload(()=>import("./index-6Ez4sj9Y.js"),[]);const drlCaptureRegexp=/^(?:dweb:\/\/)?(did:[^\/]+)(?:\/protocols\/([^\/]+)\/?)?/,hasBuffers=typeof buffer$2.Buffer<"u",natives={canonicalize:function(kt){var At="";return xt(kt),At;function xt(Bt){if(Bt===null||typeof Bt!="object"||Bt.toJSON!=null)At+=JSON.stringify(Bt);else if(Array.isArray(Bt)){At+="[";let Nt=!1;Bt.forEach(jt=>{Nt&&(At+=","),Nt=!0,xt(jt)}),At+="]"}else{At+="{";let Nt=!1;Object.keys(Bt).sort().forEach(jt=>{Nt&&(At+=","),Nt=!0,At+=JSON.stringify(jt),At+=":",xt(Bt[jt])}),At+="}"}}},deepSet(kt,At,xt){const Bt=At.split("."),Nt=Bt.pop(),jt=Bt.reduce((Ut,Lt)=>Ut[Lt]=Ut[Lt]||{},kt);jt[Nt]=xt},unslash(kt){return kt.endsWith("/")?kt.slice(0,-1):kt},randomString(kt=32){const At="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";let xt="";const Bt=new Uint8Array(kt);return crypto.getRandomValues(Bt),Bt.forEach(Nt=>{xt+=At[Nt%At.length]}),xt},url:{encode:kt=>{let At=[hasBuffers?buffer$2.Buffer.from:btoa](encodeURIComponent(kt).replace(/%([0-9A-F]{2})/g,(xt,Bt)=>String.fromCharCode("0x"+Bt)));return hasBuffers&&(At=At.toString("base64")),At.replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"")},decode:kt=>{let At=kt.replace(/-/g,"+").replace(/_/g,"/");return At=hasBuffers?buffer$2.Buffer.from(At,"base64").toString():atob(At),decodeURIComponent(At.split("").map(xt=>"%"+("00"+xt.charCodeAt(0).toString(16)).slice(-2)).join(""))}},drl:{async cache(kt,At,xt){return await(await caches.open("drl")).put(kt,new Response(xt||await At.data.blob(),{headers:{"Content-Type":At.dataFormat,"dwn-cache-time":Date.now().toString()}})),kt},async fromRecord(kt,At,xt){const Bt=`https://dweb/${kt.author}/records/${kt.id}`;return At&&await this.cache(Bt,kt,xt),Bt},create(kt,{protocol:At="",action:xt="",path:Bt="",params:Nt={},hash:jt="",flushCache:Ut=!1}){let Lt=`https://dweb/${kt}${xt?"/"+xt:""}`;At&&(Lt+="/protocols/"+Convert.string(At).toBase64Url()),Lt+=natives.unslash(Bt.startsWith("/")?Bt:"/"+Bt);const Ht=new URLSearchParams;for(let Vt in Nt){const zt=Nt[Vt];Array.isArray(zt)?zt.forEach(Wt=>Ht.append(Vt,Wt)):Ht.append(Vt,zt)}return Lt+Ht.toString()+(Ut?"?cache-updated="+new Date().getTime():"")+jt},parse(kt,At="*"){const xt=natives.unslash(kt),Bt=new URLPattern({protocol:"dweb",pathname:At}).exec(xt);if(!Bt)return null;const Nt=xt.match(drlCaptureRegexp),jt=Nt==null?void 0:Nt[2];return{did:(Nt==null?void 0:Nt[1])||null,protocol:jt?decodeURIComponent(jt):null,path:Bt.pathname.groups,params:Object.fromEntries(new URLSearchParams(Bt.search.input)),hash:Bt.hash.input}}},worker(kt,At=!1){const xt=new Blob([`
+`,Spinner=kt=>{var At,xt,_s,$s,jt;return jt=class extends kt{constructor(){super();Fn(this,xt);Fn(this,At);let Lt;const Ht=this.firstUpdated;Pn(this,At,new Promise(Vt=>Lt=Vt)),this.firstUpdated=async Vt=>{Lt(),await(Ht==null?void 0:Ht.call(this,Vt))}}async startSpinner(Lt={renderImmediate:!1,minimum:0,fixed:!1}){const Ht=Lt.fixed?"fixed":"";await rn(this,At);const Vt=typeof Lt.target=="string"?this.shadowRoot.querySelector(Lt.target):Lt.target||this.shadowRoot;let zt=Vt.querySelector(".spinner-mixin");if(zt){zt.setAttribute("spinner-show","");return}zt=An(this,xt,$s).call(this),zt.setAttribute("spinner-options",Ht),Vt.append(zt),Lt.minimum&&(zt._spinnerMixinDelay=DOM$1.delay(Lt.minimum)),Lt.renderImmediate?zt.setAttribute("spinner-show",""):DOM$1.skipFrame(()=>zt.setAttribute("spinner-show","")),await DOM$1.delay(transitionDuration)}async stopSpinner(Lt={}){var zt;const Vt=(typeof Lt.target=="string"?this.shadowRoot.querySelector(Lt.target):Lt.target||this.shadowRoot).querySelector(".spinner-mixin");await(Vt==null?void 0:Vt._spinnerMixinDelay),(zt=Vt==null?void 0:Vt.removeAttribute)==null||zt.call(Vt,"spinner-show"),document.visibilityState==="hidden"&&(Vt==null||Vt.remove())}},At=new WeakMap,xt=new WeakSet,_s=function(Lt){Lt.propertyName==="opacity"&&getComputedStyle(Lt.target).opacity==="0"&&Lt.target.remove()},$s=function(){const Lt=document.createElement("div");return Lt.classList.add("spinner-mixin"),Lt.ontransitionend=Ht=>An(this,xt,_s).call(this,Ht),Lt.appendChild(document.createElement("sl-spinner")),Lt},jt};h$2.with=function(...kt){return kt.reduce((At,xt)=>xt(At),this)};function addSchemas(kt){const At=kt.types,xt=kt.protocol;return Object.entries(At).reduce((Bt,[Nt,jt])=>(jt.dataFormats.some(Ut=>Ut.match("json"))&&(Bt[Nt]=At[Nt].schema=xt+"/schemas/"+Nt),Bt),{})}const dpmDefinition={protocol:"https://dpm.software/docs/protocol",published:!0,types:{publisher:{dataFormats:["application/json"]},package:{dataFormats:["application/json"]},logo:{dataFormats:["image/gif","image/png","image/jpeg"]},release:{schema:"https://www.rfc-editor.org/rfc/rfc1952.html",dataFormats:["application/gzip"]},admin:{dataFormats:["application/json"]}},structure:{publisher:{$role:!0},package:{$tags:{name:{type:"string"},$requiredTags:["name"]},$actions:[{who:"author",of:"package",can:["create","update","delete"]},{role:"publisher",can:["create","update","delete"]},{role:"package/admin",can:["co-update","co-delete"]}],admin:{$role:!0,$actions:[{who:"author",of:"package",can:["create","update","delete"]}]},logo:{$actions:[{who:"author",of:"package",can:["create","update","delete","co-update","co-delete"]},{role:"package/admin",can:["create","update","delete","co-update","co-delete"]}]},release:{$tags:{version:{type:"string"},integrity:{type:"string"},$requiredTags:["version","integrity"]},$actions:[{who:"author",of:"package",can:["create","update","delete"]},{role:"package/admin",can:["create","update","delete"]}]}}}},profileDefinition={published:!0,protocol:"https://areweweb5yet.com/protocols/profile",types:{name:{dataFormats:["application/json"]},social:{dataFormats:["application/json"]},messaging:{dataFormats:["application/json"]},phone:{dataFormats:["application/json"]},address:{dataFormats:["application/json"]},career:{dataFormats:["application/json"]},payment:{dataFormats:["application/json"]},connect:{dataFormats:["application/json"]},avatar:{dataFormats:["image/gif","image/png","image/jpeg"]},hero:{dataFormats:["image/gif","image/png","image/jpeg"]}},structure:{name:{},social:{},career:{},avatar:{},hero:{},messaging:{},address:{},phone:{},payment:{},connect:{}}},profile={uri:profileDefinition.protocol,schemas:addSchemas(profileDefinition),definition:profileDefinition},dpm={uri:dpmDefinition.protocol,schemas:addSchemas(dpmDefinition),definition:dpmDefinition},byUri={[profileDefinition.protocol]:profile},protocols=Object.freeze(Object.defineProperty({__proto__:null,byUri,dpm,profile},Symbol.toStringTag,{value:"Module"}));globalThis.URLPattern||await __vitePreload(()=>import("./index-6Ez4sj9Y.js"),[]);const drlCaptureRegexp=/^(?:dweb:\/\/)?(did:[^\/]+)(?:\/protocols\/([^\/]+)\/?)?/,hasBuffers=typeof buffer$2.Buffer<"u",natives={canonicalize:function(kt){var At="";return xt(kt),At;function xt(Bt){if(Bt===null||typeof Bt!="object"||Bt.toJSON!=null)At+=JSON.stringify(Bt);else if(Array.isArray(Bt)){At+="[";let Nt=!1;Bt.forEach(jt=>{Nt&&(At+=","),Nt=!0,xt(jt)}),At+="]"}else{At+="{";let Nt=!1;Object.keys(Bt).sort().forEach(jt=>{Nt&&(At+=","),Nt=!0,At+=JSON.stringify(jt),At+=":",xt(Bt[jt])}),At+="}"}}},deepSet(kt,At,xt){const Bt=At.split("."),Nt=Bt.pop(),jt=Bt.reduce((Ut,Lt)=>Ut[Lt]=Ut[Lt]||{},kt);jt[Nt]=xt},unslash(kt){return kt.endsWith("/")?kt.slice(0,-1):kt},randomString(kt=32){const At="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";let xt="";const Bt=new Uint8Array(kt);return crypto.getRandomValues(Bt),Bt.forEach(Nt=>{xt+=At[Nt%At.length]}),xt},url:{encode:kt=>{let At=[hasBuffers?buffer$2.Buffer.from:btoa](encodeURIComponent(kt).replace(/%([0-9A-F]{2})/g,(xt,Bt)=>String.fromCharCode("0x"+Bt)));return hasBuffers&&(At=At.toString("base64")),At.replace(/\+/g,"-").replace(/\//g,"_").replace(/=+$/,"")},decode:kt=>{let At=kt.replace(/-/g,"+").replace(/_/g,"/");return At=hasBuffers?buffer$2.Buffer.from(At,"base64").toString():atob(At),decodeURIComponent(At.split("").map(xt=>"%"+("00"+xt.charCodeAt(0).toString(16)).slice(-2)).join(""))}},drl:{async cache(kt,At,xt){return await(await caches.open("drl")).put(kt,new Response(xt||await At.data.blob(),{headers:{"Content-Type":At.dataFormat,"dwn-cache-time":Date.now().toString()}})),kt},async fromRecord(kt,At,xt){const Bt=`https://dweb/${kt.author}/records/${kt.id}`;return At&&await this.cache(Bt,kt,xt),Bt},create(kt,{protocol:At="",action:xt="",path:Bt="",params:Nt={},hash:jt="",flushCache:Ut=!1}){let Lt=`https://dweb/${kt}${xt?"/"+xt:""}`;At&&(Lt+="/protocols/"+Convert.string(At).toBase64Url()),Lt+=natives.unslash(Bt.startsWith("/")?Bt:"/"+Bt);const Ht=new URLSearchParams;for(let Vt in Nt){const zt=Nt[Vt];Array.isArray(zt)?zt.forEach(Wt=>Ht.append(Vt,Wt)):Ht.append(Vt,zt)}return Lt+Ht.toString()+(Ut?"?cache-updated="+new Date().getTime():"")+jt},parse(kt,At="*"){const xt=natives.unslash(kt),Bt=new URLPattern({protocol:"dweb",pathname:At}).exec(xt);if(!Bt)return null;const Nt=xt.match(drlCaptureRegexp),jt=Nt==null?void 0:Nt[2];return{did:(Nt==null?void 0:Nt[1])||null,protocol:jt?decodeURIComponent(jt):null,path:Bt.pathname.groups,params:Object.fromEntries(new URLSearchParams(Bt.search.input)),hash:Bt.hash.input}}},worker(kt,At=!1){const xt=new Blob([`
       self.onmessage = function(e) {
         const { data, code } = e.data;
         const execute = new Function('data', code);
@@ -9989,7 +9989,7 @@ zoo`.split(`
           self.postMessage({ error: error.message });
         }
       }
-    `],{type:"application/javascript"}),Bt=URL.createObjectURL(xt),Nt=new Worker(Bt);return{run:function(jt){return new Promise((Ut,Lt)=>{Nt.onmessage=function(Ht){Ht.data.error?Lt(new Error(Ht.data.error)):Ut(Ht.data.result),At||this.terminate()},Nt.postMessage({data:jt,code:kt})})},terminate:function(){Nt.terminate(),URL.revokeObjectURL(Bt)}}}};setInterval(()=>Datastore.cache={},1e3*60*60);async function cacheJson(kt){await Promise.all((Array.isArray(kt)?kt:[kt]).map(async At=>{var xt,Bt,Nt,jt;At.cache={json:await((jt=(Nt=(Bt=(xt=At.data)==null?void 0:xt.json)==null?void 0:Bt.call(xt))==null?void 0:Nt.catch(Ut=>{}))==null?void 0:jt.then(Ut=>Ut||{}))}}))}class Datastore{static cache={};static setCache(At,xt,Bt){(Datastore.cache[At]||(Datastore.cache[At]={}))[xt]=Bt}static getCache(At,xt){var Bt,Nt;return(Nt=(Bt=Datastore.cache)==null?void 0:Bt[At])==null?void 0:Nt[xt]}constructor(At,xt={}){this.options=xt,this.did=At.did.connectedDid,this.dwn=At.dwn,this.ready=this.installProtocols()}async installProtocols(){const At=await this.dwn.protocols.query({message:{}}),xt=[];if(this.options.aggregator){const Bt=(void 0).definition.structure;Bt.story.$actions=Bt.thread.$actions=[{who:"anyone",can:["create","update","delete"]}]}try{for(let Nt in byUri){let jt=At.protocols.find(Vt=>Nt===Vt.definition.protocol),Ut=byUri[Nt].definition,Lt=natives.canonicalize(Ut),Ht=natives.canonicalize((jt==null?void 0:jt.definition)||null);Lt!==Ht&&(console.log("installing protocol: "+Nt),xt.push(this.dwn.protocols.configure({message:{definition:Ut}})))}const Bt=await Promise.all(xt);try{await Promise.all(Bt.map(({protocol:Nt})=>Nt.send(this.did)))}catch(Nt){return console.log("remote push of configuration failed",Nt),!0}}catch(Bt){return console.log("local install of configuration failed",Bt),!1}return!0}async getProtocol(At,xt={}){const Bt={from:xt.from,message:{filter:{protocol:At}}},{protocols:Nt,status:jt}=await this.dwn.protocols.query(Bt);return{protocol:Nt[0],status:jt}}async queryProtocolRecords(At,xt,Bt={}){await this.ready;const Nt={filter:{protocol:protocols[At].uri,protocolPath:xt}},jt={message:Nt};return Bt.from&&(jt.from=Bt.from),Bt.recordId&&(Nt.filter.recordId=Bt.recordId),Bt.parentId&&(Nt.filter.parentId=Bt.parentId),Bt.contextId&&(Nt.filter.contextId=Bt.contextId),Bt.published!==void 0&&(Nt.filter.published=Bt.published),Bt.recipient&&(Nt.filter.recipient=Bt.recipient),Bt.role&&(Nt.protocolRole=Bt.role),(Bt.sort||Bt.latestRecord)&&(Nt.dateSort=Bt.latestRecord?"createdDescending":Bt.sort),(Bt.pagination||Bt.latestRecord)&&(Nt.pagination=Bt.latestRecord?{limit:1}:Bt.pagination),this.dwn.records.query(jt)}async readProtocolRecord(At,xt={}){await this.ready;const Bt={message:{filter:{recordId:At}}};return xt.from&&(Bt.from=xt.from),xt.role&&(Bt.message.protocolRole=xt.role),this.dwn.records.read(Bt)}async createProtocolRecord(At,xt,Bt={}){await this.ready;const Nt={message:{protocol:protocols[At].uri,protocolPath:xt}},jt=protocols[At].schemas[xt.split("/").pop()];jt&&(Nt.message.schema=jt),Bt.from&&(Nt.from=Bt.from),Bt.store===!1&&(Nt.store=Bt.store),Bt.parentContextId&&(Nt.message.parentContextId=Bt.parentContextId),Bt.contextId&&(Nt.message.contextId=Bt.contextId),Nt.message.dataFormat=Bt.dataFormat||"application/json",typeof Bt.data<"u"?Nt.data=Bt.data:Bt.dataFormat==="application/json"&&(Nt.data={}),Bt.published!==void 0&&(Nt.message.published=Bt.published),Bt.recipient&&(Nt.message.recipient=Bt.recipient),Bt.role&&(Nt.message.protocolRole=Bt.role);const Ut=await this.dwn.records.create(Nt);return console.log("create status",Ut),Bt.store!==!1&&await Ut.record.send(Bt.from||this.did).then(Lt=>{console.log("sent success",Ut)}).catch(Lt=>{console.log("send error",Lt)}),Ut}async putRecordPath(At,xt,Bt,Nt={}){await this.ready;let jt=Nt.record;if(!jt){const{records:Vt}=await this.queryProtocolRecords(At,xt,{latestRecord:!0});jt=Vt[0]}Bt=Bt instanceof File?new Blob([Bt],{type:Nt.dataFormat||Bt.type}):Bt;const Ut=Bt instanceof Blob?Bt.type:Nt.dataFormat||"application/json";try{jt?(await jt.update({data:Bt,published:Nt.published}),await jt.send(this.did)):jt=(await this.createProtocolRecord(At,xt,{data:Bt,dataFormat:Ut,published:Nt.published})).record}catch(Vt){console.log(Vt)}const Lt=jt.drl=natives.drl.create(this.did,{protocol:protocols[At].uri,path:xt,action:"read"}),Ht=jt.blob=jt.blob||await jt.data.blob();return Nt.cache!==!1&&natives.drl.cache(Lt,jt,Ht),jt}async readRecordPath(At,xt,Bt={}){await this.ready,Bt.latestRecord=!0;const{records:Nt,status:jt}=await this.queryProtocolRecords(At,xt,Bt),Ut=Nt[0];if(Ut)return Bt.cache!==!1&&await cacheJson(Ut),Ut}async getAggregators(At={}){At.latestRecord=!0;const{records:xt}=await this.queryProtocolRecords("social","aggregators",At),Bt=xt[0];return Bt&&await cacheJson(Bt),Bt}async setAggregators(At,xt={}){let Bt;try{Bt=await this.getAggregators(xt),Bt?await Bt.update({data:At}):Bt=(await this.createProtocolRecord("social","aggregators",{published:!0,data:At,dataFormat:"application/json"})).record;const{status:Nt}=await Bt.send(xt.from)}catch(Nt){console.log(Nt)}return Bt&&await cacheJson(Bt),Bt}async createSocial(At={}){const{record:xt,status:Bt}=await this.createProtocolRecord("profile","social",{published:!0,data:At.data||{},dataFormat:"application/json"});return At.cache!==!1&&await cacheJson(xt),xt}async getSocial(At={}){await this.ready;const xt=At.from||this.did;if(xt!==this.did){const Ut=Datastore.getCache(xt,"social");if(Ut)return Ut}const{records:Bt,status:Nt}=await this.queryProtocolRecords("profile","social",At),jt=Bt[0];if(jt)return At.cache!==!1&&await cacheJson(jt),Datastore.setCache(xt,"social",jt),jt}async createProfileImage(At,xt={}){xt.data&&(xt.dataFormat=xt.data.type,xt.data instanceof File&&(xt.data=new Blob([xt.data],{type:xt.dataFormat}))),xt.published=!0;const{record:Bt,status:Nt}=await this.createProtocolRecord("profile",At,xt);return Bt}async getProfileImage(At,xt={}){const{records:Bt,status:Nt}=await this.queryProtocolRecords("profile",At,xt);return Bt[0]}async readProfileImage(At,xt={}){await this.ready;const Bt=xt.from=xt.from||this.did;if(!xt.skipCache){const jt=Datastore.getCache(Bt,At);if(jt)return jt}const Nt=await this.getProfileImage(At,xt);if(Nt){const jt=await natives.drl.fromRecord(Nt,!0);Nt.cache={uri:jt},Datastore.setCache(Bt,At,Nt)}return Nt}async setProfileImage(At,xt,Bt,Nt=this.did){let jt=Bt||await this.getProfileImage(At,{from:Nt}),Ut=xt?new Blob([xt],{type:xt.type}):void 0;try{if(Ut){jt?await jt.update({data:Ut}):jt=await this.createProfileImage(At,{data:Ut,from:Nt});const{status:Lt}=await jt.send(Nt)}else jt&&(Ut=await jt.data.blob())}catch(Lt){console.log(Lt)}return jt&&(jt.cache=jt.cache||{},jt.cache.blob=Ut,jt.cache.uri=Ut?URL.createObjectURL(Ut):void 0),jt}async createCareer(At={}){const{record:xt,status:Bt}=await this.createProtocolRecord("profile","career",{published:!0,data:At.data,dataFormat:"application/json"});return At.cache!==!1&&await cacheJson(xt),xt}async getCareer(At={}){await this.ready;const xt=At.from||this.did;if(xt!==this.did){const Ut=Datastore.getCache(xt,"career");if(Ut)return Ut}const{records:Bt,status:Nt}=await this.queryProtocolRecords("profile","career",At),jt=Bt[0];if(jt)return At.cache!==!1&&await cacheJson(jt),Datastore.setCache(xt,"career",jt),jt}async createStory(At={}){const{record:xt,status:Bt}=await this.createProtocolRecord("social","story",{published:!1,data:At.data||{},dataFormat:"application/json"});return At.cache!==!1&&await cacheJson(xt),xt}async deleteStory(At){const xt=await this.dwn.records.delete({message:{recordId:At}});if(xt.status>399)throw"Delete failed";return xt}async readStory(At,xt={}){const{record:Bt,status:Nt}=await this.readProtocolRecord(At,xt);if(Nt.code>399){const jt=new Error(Nt.detail);throw jt.code=Nt.code,jt.detail=Nt.detail,jt}return xt.cache!==!1&&await cacheJson(Bt),Bt}async queryStories(At={}){const xt=await this.queryProtocolRecords("social","story",At);return At.cache!==!1&&await cacheJson(xt.records),xt}async createStoryMedia(At,xt={}){xt.data&&(xt.dataFormat=xt.data.type,xt.data instanceof File&&(xt.data=new Blob([xt.data],{type:xt.dataFormat}))),xt.published=!0,xt.parentContextId=At.id;const{record:Bt,status:Nt}=await this.createProtocolRecord("social","story/media",xt);return Bt}async readStoryMedia(At,xt={}){const{record:Bt,status:Nt}=await this.readProtocolRecord(At,xt);if(Nt.code>399){const jt=new Error(Nt.detail);throw jt.code=Nt.code,jt.detail=Nt.detail,jt}if(xt.cache!==!1){const jt=await natives.drl.fromRecord(Bt,!0);Bt.cache={uri:jt}}return Bt}async setStoryHero(At,xt={}){xt.data&&(xt.dataFormat=xt.data.type,xt.data instanceof File&&(xt.data=new Blob([xt.data],{type:xt.dataFormat}))),xt.published=!0;let Bt=At._hero,Nt=At.cache.json;const jt=Nt.hero;Bt||jt?(Bt||(Bt=(await this.queryProtocolRecords("social","story/media",{recordId:jt})).records[0]),await Bt.update({data:xt.data}),Bt.send(At.author)):(xt.parentContextId=At.id,Bt=(await this.createProtocolRecord("social","story/media",xt)).record);const Ut=await natives.drl.fromRecord(Bt,!0);return Bt.cache={uri:Ut},jt!==Bt.id&&(Nt.hero=Bt.id,console.log(Nt),await At.update({data:Nt}),At.send(At.author)),At._hero=Bt}async queryThreads(At={}){const xt=await this.queryProtocolRecords("social","thread",At);return At.cache!==!1&&await cacheJson(xt.records),xt}queryFollows=(At={})=>this.queryProtocolRecords("social","follow",At);async getFollows(At,xt={}){return At&&(xt.pagination=xt.pagination||{},xt.pagination.cursor=At),this.queryProtocolRecords("social","follow",xt)}async toggleFollow(At,xt){var Ut,Lt;var{records:Bt,status:Nt}=await this.queryFollows({recipient:At}),jt=Bt[0];if(jt){if(jt!=null&&jt.isDeleted)jt.update();else if(!xt){var{status:Nt}=await this.dwn.records.delete({message:{recordId:jt.id}});return!1}}else{const Ht=await this.getAggregators({from:At});var{record:jt}=await this.createProtocolRecord("social","follow",{recipient:At,data:{aggregators:((Lt=(Ut=Ht==null?void 0:Ht.cache)==null?void 0:Ut.json)==null?void 0:Lt.aggregators)||[],lastAggregatorFetch:(Ht==null?void 0:Ht.dateModified)||null}})}return jt}async sendInvite(At,xt,Bt={}){if(!Bt.skipCheck){let Lt=await this.getActiveInvite(xt,{recipient:At});if(Lt)return Lt}const{record:Nt,status:jt}=await this.createProtocolRecord("social","invite",Object.assign({recipient:At,store:!1,dataFormat:"application/json",data:{link:xt}},Bt));console.log("invite ",Nt),Bt.cache!==!1&&await cacheJson(Nt);const{status:Ut}=await Nt.send(At);if(Ut.code===202){console.log(Nt);const Lt=await Nt.store();return console.log(Lt),Nt}}}async function initializeIdentities(kt){const At={},xt=[];return kt=kt?Array.isArray(kt)?kt:[kt]:await DWeb$1.identity.list(),await Promise.all(kt.map(async Bt=>{if(At[Bt.did.uri]=Bt,Bt.web5)return;const Nt=Bt.web5=await DWeb$1.use(Bt),jt=Bt.datastore=new Datastore(Nt);xt.push(jt.readRecordPath("profile","connect").then(async Ut=>{if(Ut){const Lt=Ut.cache.json||{},Ht=(Lt==null?void 0:Lt.webWallets)||(Lt.webWallets=[]);Ht.find(Vt=>new URL(Vt).origin===location.origin)||(Ht.push(location.origin),await Ut.update({data:Lt,published:!0}),navigator.onLine&&await Ut.send())}else Ut=await jt.putRecordPath("profile","connect",{webWallets:[location.origin]},{published:!0});Bt.connectRecord=Ut}).catch(Ut=>console.error(Ut)))})),Promise.allSettled(xt).then(()=>App$1.updateState("identities")).catch(Bt=>console.error(Bt)),At}let App$1;const $App=kt=>class extends kt.with(State){static properties={ready:{store:"page"},identities:{store:"page"},avatars:{store:"page"}};constructor(){if(super(),App$1)throw"$App is a singleton and an instance already exists.";globalThis.App=App$1=this;let At;this.ready=new Promise(xt=>At=xt),initializeIdentities().then(xt=>{this.identities=xt,this.ready.state=!0,At(!0)})}async updateState(At,xt,Bt){const Nt=this[At];return xt=xt===void 0?Nt:xt,Array.isArray(xt)?this[At]=Bt&&xt!==Nt?[...Nt||[],...xt||[]]:{...xt}:typeof xt=="object"&&xt?this[At]=Bt&&xt!==Nt?{...Nt||{},...xt||{}}:{...xt}:this[At]=xt,this[At]}async updateProfileImage(At,xt,Bt){const Nt=await At.datastore.putRecordPath("profile",xt,Bt,{published:!0});return At[xt]=Nt.drl+"?cache-updated="+new Date().getTime(),this.updateState("identities"),Nt}async addIdentity(At){return await initializeIdentities(At),this.identities={...this.identities||{},[DWeb$1.identity.uriFrom(At)]:At}}async saveIdentityLabel(At,xt){const Bt=At.connectRecord;if(!Bt){console.log("No connect record found for identity: ",At);return}const Nt=Bt.cache.json;Nt.label=xt,await Bt.update({data:Nt,published:!0}),navigator.onLine&&await Bt.send(),await DWeb$1.identity.addAutofillDid(xt+"@"+At.did.uri),this.updateState("identities")}},PageStyles=i$7`
+    `],{type:"application/javascript"}),Bt=URL.createObjectURL(xt),Nt=new Worker(Bt);return{run:function(jt){return new Promise((Ut,Lt)=>{Nt.onmessage=function(Ht){Ht.data.error?Lt(new Error(Ht.data.error)):Ut(Ht.data.result),At||this.terminate()},Nt.postMessage({data:jt,code:kt})})},terminate:function(){Nt.terminate(),URL.revokeObjectURL(Bt)}}}};setInterval(()=>Datastore.cache={},1e3*60*60);async function cacheJson(kt){await Promise.all((Array.isArray(kt)?kt:[kt]).map(async At=>{var xt,Bt,Nt,jt;At.cache={json:await((jt=(Nt=(Bt=(xt=At.data)==null?void 0:xt.json)==null?void 0:Bt.call(xt))==null?void 0:Nt.catch(Ut=>{}))==null?void 0:jt.then(Ut=>Ut||{}))}}))}class Datastore{static cache={};static setCache(At,xt,Bt){(Datastore.cache[At]||(Datastore.cache[At]={}))[xt]=Bt}static getCache(At,xt){var Bt,Nt;return(Nt=(Bt=Datastore.cache)==null?void 0:Bt[At])==null?void 0:Nt[xt]}constructor(At,xt={}){this.options=xt,this.did=At.did.connectedDid,this.dwn=At.dwn,this.ready=this.installProtocols()}async installProtocols(){const At=await this.dwn.protocols.query({message:{}}),xt=[];if(this.options.aggregator){const Bt=(void 0).definition.structure;Bt.story.$actions=Bt.thread.$actions=[{who:"anyone",can:["create","update","delete"]}]}try{for(let Nt in byUri){let jt=At.protocols.find(Vt=>Nt===Vt.definition.protocol),Ut=byUri[Nt].definition,Lt=natives.canonicalize(Ut),Ht=natives.canonicalize((jt==null?void 0:jt.definition)||null);Lt!==Ht&&(console.log("installing protocol: "+Nt),xt.push(this.dwn.protocols.configure({message:{definition:Ut}})))}const Bt=await Promise.all(xt);try{await Promise.all(Bt.map(({protocol:Nt})=>Nt.send(this.did)))}catch(Nt){return console.log("remote push of configuration failed",Nt),!0}}catch(Bt){return console.log("local install of configuration failed",Bt),!1}return!0}async getProtocol(At,xt={}){const Bt={from:xt.from,message:{filter:{protocol:At}}},{protocols:Nt,status:jt}=await this.dwn.protocols.query(Bt);return{protocol:Nt[0],status:jt}}async queryProtocolRecords(At,xt,Bt={}){await this.ready;const Nt={filter:{protocol:protocols[At].uri,protocolPath:xt}},jt={message:Nt};return Bt.from&&(jt.from=Bt.from),Bt.recordId&&(Nt.filter.recordId=Bt.recordId),Bt.parentId&&(Nt.filter.parentId=Bt.parentId),Bt.contextId&&(Nt.filter.contextId=Bt.contextId),Bt.published!==void 0&&(Nt.filter.published=Bt.published),Bt.recipient&&(Nt.filter.recipient=Bt.recipient),Bt.role&&(Nt.protocolRole=Bt.role),(Bt.sort||Bt.latestRecord)&&(Nt.dateSort=Bt.latestRecord?"createdDescending":Bt.sort),(Bt.pagination||Bt.latestRecord)&&(Nt.pagination=Bt.latestRecord?{limit:1}:Bt.pagination),this.dwn.records.query(jt)}async readProtocolRecord(At,xt={}){await this.ready;const Bt={message:{filter:{recordId:At}}};return xt.from&&(Bt.from=xt.from),xt.role&&(Bt.message.protocolRole=xt.role),this.dwn.records.read(Bt)}async createProtocolRecord(At,xt,Bt={}){await this.ready;const Nt={message:{protocol:protocols[At].uri,protocolPath:xt}},jt=protocols[At].schemas[xt.split("/").pop()];jt&&(Nt.message.schema=jt),Bt.from&&(Nt.from=Bt.from),Bt.store===!1&&(Nt.store=Bt.store),Bt.parentContextId&&(Nt.message.parentContextId=Bt.parentContextId),Bt.contextId&&(Nt.message.contextId=Bt.contextId),Nt.message.dataFormat=Bt.dataFormat||"application/json",typeof Bt.data<"u"?Nt.data=Bt.data:Bt.dataFormat==="application/json"&&(Nt.data={}),Bt.published!==void 0&&(Nt.message.published=Bt.published),Bt.recipient&&(Nt.message.recipient=Bt.recipient),Bt.role&&(Nt.message.protocolRole=Bt.role);const Ut=await this.dwn.records.create(Nt);return console.log("create status",Ut),Bt.store!==!1&&await Ut.record.send(Bt.from||this.did).then(Lt=>{console.log("sent success",Ut)}).catch(Lt=>{console.log("send error",Lt)}),Ut}async putRecordPath(At,xt,Bt,Nt={}){await this.ready;let jt=Nt.record;if(!jt){const{records:Vt}=await this.queryProtocolRecords(At,xt,{latestRecord:!0});jt=Vt[0]}Bt=Bt instanceof File?new Blob([Bt],{type:Nt.dataFormat||Bt.type}):Bt;const Ut=Bt instanceof Blob?Bt.type:Nt.dataFormat||"application/json";try{jt?(await jt.update({data:Bt,published:Nt.published}),await jt.send(this.did)):jt=(await this.createProtocolRecord(At,xt,{data:Bt,dataFormat:Ut,published:Nt.published})).record}catch(Vt){console.log(Vt)}const Lt=jt.drl=natives.drl.create(this.did,{protocol:protocols[At].uri,path:xt,action:"read"}),Ht=jt.blob=jt.blob||await jt.data.blob();return Nt.cache!==!1&&natives.drl.cache(Lt,jt,Ht),jt}async readRecordPath(At,xt,Bt={}){await this.ready,Bt.latestRecord=!0;const{records:Nt,status:jt}=await this.queryProtocolRecords(At,xt,Bt),Ut=Nt[0];if(Ut)return Bt.cache!==!1&&await cacheJson(Ut),Ut}async getAggregators(At={}){At.latestRecord=!0;const{records:xt}=await this.queryProtocolRecords("social","aggregators",At),Bt=xt[0];return Bt&&await cacheJson(Bt),Bt}async setAggregators(At,xt={}){let Bt;try{Bt=await this.getAggregators(xt),Bt?await Bt.update({data:At}):Bt=(await this.createProtocolRecord("social","aggregators",{published:!0,data:At,dataFormat:"application/json"})).record;const{status:Nt}=await Bt.send(xt.from)}catch(Nt){console.log(Nt)}return Bt&&await cacheJson(Bt),Bt}async createSocial(At={}){const{record:xt,status:Bt}=await this.createProtocolRecord("profile","social",{published:!0,data:At.data||{},dataFormat:"application/json"});return At.cache!==!1&&await cacheJson(xt),xt}async getSocial(At={}){await this.ready;const xt=At.from||this.did;if(xt!==this.did){const Ut=Datastore.getCache(xt,"social");if(Ut)return Ut}const{records:Bt,status:Nt}=await this.queryProtocolRecords("profile","social",At),jt=Bt[0];if(jt)return At.cache!==!1&&await cacheJson(jt),Datastore.setCache(xt,"social",jt),jt}async createProfileImage(At,xt={}){xt.data&&(xt.dataFormat=xt.data.type,xt.data instanceof File&&(xt.data=new Blob([xt.data],{type:xt.dataFormat}))),xt.published=!0;const{record:Bt,status:Nt}=await this.createProtocolRecord("profile",At,xt);return Bt}async getProfileImage(At,xt={}){const{records:Bt,status:Nt}=await this.queryProtocolRecords("profile",At,xt);return Bt[0]}async readProfileImage(At,xt={}){await this.ready;const Bt=xt.from=xt.from||this.did;if(!xt.skipCache){const jt=Datastore.getCache(Bt,At);if(jt)return jt}const Nt=await this.getProfileImage(At,xt);if(Nt){const jt=await natives.drl.fromRecord(Nt,!0);Nt.cache={uri:jt},Datastore.setCache(Bt,At,Nt)}return Nt}async setProfileImage(At,xt,Bt,Nt=this.did){let jt=Bt||await this.getProfileImage(At,{from:Nt}),Ut=xt?new Blob([xt],{type:xt.type}):void 0;try{if(Ut){jt?await jt.update({data:Ut}):jt=await this.createProfileImage(At,{data:Ut,from:Nt});const{status:Lt}=await jt.send(Nt)}else jt&&(Ut=await jt.data.blob())}catch(Lt){console.log(Lt)}return jt&&(jt.cache=jt.cache||{},jt.cache.blob=Ut,jt.cache.uri=Ut?URL.createObjectURL(Ut):void 0),jt}async createCareer(At={}){const{record:xt,status:Bt}=await this.createProtocolRecord("profile","career",{published:!0,data:At.data,dataFormat:"application/json"});return At.cache!==!1&&await cacheJson(xt),xt}async getCareer(At={}){await this.ready;const xt=At.from||this.did;if(xt!==this.did){const Ut=Datastore.getCache(xt,"career");if(Ut)return Ut}const{records:Bt,status:Nt}=await this.queryProtocolRecords("profile","career",At),jt=Bt[0];if(jt)return At.cache!==!1&&await cacheJson(jt),Datastore.setCache(xt,"career",jt),jt}async createStory(At={}){const{record:xt,status:Bt}=await this.createProtocolRecord("social","story",{published:!1,data:At.data||{},dataFormat:"application/json"});return At.cache!==!1&&await cacheJson(xt),xt}async deleteStory(At){const xt=await this.dwn.records.delete({message:{recordId:At}});if(xt.status>399)throw"Delete failed";return xt}async readStory(At,xt={}){const{record:Bt,status:Nt}=await this.readProtocolRecord(At,xt);if(Nt.code>399){const jt=new Error(Nt.detail);throw jt.code=Nt.code,jt.detail=Nt.detail,jt}return xt.cache!==!1&&await cacheJson(Bt),Bt}async queryStories(At={}){const xt=await this.queryProtocolRecords("social","story",At);return At.cache!==!1&&await cacheJson(xt.records),xt}async createStoryMedia(At,xt={}){xt.data&&(xt.dataFormat=xt.data.type,xt.data instanceof File&&(xt.data=new Blob([xt.data],{type:xt.dataFormat}))),xt.published=!0,xt.parentContextId=At.id;const{record:Bt,status:Nt}=await this.createProtocolRecord("social","story/media",xt);return Bt}async readStoryMedia(At,xt={}){const{record:Bt,status:Nt}=await this.readProtocolRecord(At,xt);if(Nt.code>399){const jt=new Error(Nt.detail);throw jt.code=Nt.code,jt.detail=Nt.detail,jt}if(xt.cache!==!1){const jt=await natives.drl.fromRecord(Bt,!0);Bt.cache={uri:jt}}return Bt}async setStoryHero(At,xt={}){xt.data&&(xt.dataFormat=xt.data.type,xt.data instanceof File&&(xt.data=new Blob([xt.data],{type:xt.dataFormat}))),xt.published=!0;let Bt=At._hero,Nt=At.cache.json;const jt=Nt.hero;Bt||jt?(Bt||(Bt=(await this.queryProtocolRecords("social","story/media",{recordId:jt})).records[0]),await Bt.update({data:xt.data}),Bt.send(At.author)):(xt.parentContextId=At.id,Bt=(await this.createProtocolRecord("social","story/media",xt)).record);const Ut=await natives.drl.fromRecord(Bt,!0);return Bt.cache={uri:Ut},jt!==Bt.id&&(Nt.hero=Bt.id,console.log(Nt),await At.update({data:Nt}),At.send(At.author)),At._hero=Bt}async queryPackages(At={}){const xt=await this.queryProtocolRecords("dpm","package",At);return At.cache!==!1&&await cacheJson(xt.records),xt}queryFollows=(At={})=>this.queryProtocolRecords("social","follow",At);async getFollows(At,xt={}){return At&&(xt.pagination=xt.pagination||{},xt.pagination.cursor=At),this.queryProtocolRecords("social","follow",xt)}async toggleFollow(At,xt){var Ut,Lt;var{records:Bt,status:Nt}=await this.queryFollows({recipient:At}),jt=Bt[0];if(jt){if(jt!=null&&jt.isDeleted)jt.update();else if(!xt){var{status:Nt}=await this.dwn.records.delete({message:{recordId:jt.id}});return!1}}else{const Ht=await this.getAggregators({from:At});var{record:jt}=await this.createProtocolRecord("social","follow",{recipient:At,data:{aggregators:((Lt=(Ut=Ht==null?void 0:Ht.cache)==null?void 0:Ut.json)==null?void 0:Lt.aggregators)||[],lastAggregatorFetch:(Ht==null?void 0:Ht.dateModified)||null}})}return jt}async sendInvite(At,xt,Bt={}){if(!Bt.skipCheck){let Lt=await this.getActiveInvite(xt,{recipient:At});if(Lt)return Lt}const{record:Nt,status:jt}=await this.createProtocolRecord("social","invite",Object.assign({recipient:At,store:!1,dataFormat:"application/json",data:{link:xt}},Bt));console.log("invite ",Nt),Bt.cache!==!1&&await cacheJson(Nt);const{status:Ut}=await Nt.send(At);if(Ut.code===202){console.log(Nt);const Lt=await Nt.store();return console.log(Lt),Nt}}}async function initializeIdentities(kt){const At={},xt=[];return kt=kt?Array.isArray(kt)?kt:[kt]:await DWeb$1.identity.list(),await Promise.all(kt.map(async Bt=>{if(At[Bt.did.uri]=Bt,Bt.web5)return;const Nt=Bt.web5=await DWeb$1.use(Bt),jt=Bt.datastore=new Datastore(Nt);xt.push(jt.readRecordPath("profile","connect").then(async Ut=>{if(Ut){const Lt=Ut.cache.json||{},Ht=(Lt==null?void 0:Lt.webWallets)||(Lt.webWallets=[]);Ht.find(Vt=>new URL(Vt).origin===location.origin)||(Ht.push(location.origin),await Ut.update({data:Lt,published:!0}),navigator.onLine&&await Ut.send())}else Ut=await jt.putRecordPath("profile","connect",{webWallets:[location.origin]},{published:!0});Bt.connectRecord=Ut}).catch(Ut=>console.error(Ut)))})),Promise.allSettled(xt).then(()=>App$1.updateState("identities")).catch(Bt=>console.error(Bt)),At}async function initializePackages(){return await App$1.ready,this.packages||new Promise(async kt=>{const At=[],xt=[];for(let Bt in this.identities){const Nt=this.identities[Bt].datastore;At.push(Nt.queryPackages().then(async({records:jt})=>{xt.concat(jt)}))}await Promise.all(At),kt(this.packages=xt)})}let App$1;const $App=kt=>class extends kt.with(State){static properties={ready:{store:"page"},identities:{store:"page"},packages:{store:"page"},avatars:{store:"page"}};constructor(){if(super(),App$1)throw"$App is a singleton and an instance already exists.";globalThis.App=App$1=this;let At;this.ready=new Promise(xt=>At=xt),initializeIdentities().then(xt=>{this.identities=xt,this.ready.state=!0,At(!0)})}async updateState(At,xt,Bt){const Nt=this[At];return xt=xt===void 0?Nt:xt,Array.isArray(xt)?this[At]=Bt&&xt!==Nt?[...Nt||[],...xt||[]]:{...xt}:typeof xt=="object"&&xt?this[At]=Bt&&xt!==Nt?{...Nt||{},...xt||{}}:{...xt}:this[At]=xt,this[At]}async updateProfileImage(At,xt,Bt){const Nt=await At.datastore.putRecordPath("profile",xt,Bt,{published:!0});return At[xt]=Nt.drl+"?cache-updated="+new Date().getTime(),this.updateState("identities"),Nt}async addIdentity(At){return await initializeIdentities(At),this.identities={...this.identities||{},[DWeb$1.identity.uriFrom(At)]:At}}async addPackage(At){return await initializePackages(),this.packages=[...this.packages,At]}async saveIdentityLabel(At,xt){const Bt=At.connectRecord;if(!Bt){console.log("No connect record found for identity: ",At);return}const Nt=Bt.cache.json;Nt.label=xt,await Bt.update({data:Nt,published:!0}),navigator.onLine&&await Bt.send(),await DWeb$1.identity.addAutofillDid(xt+"@"+At.did.uri),this.updateState("identities")}},PageStyles=i$7`
 
 [hide-on-overlay] {
   transition: opacity 0.3s ease;
@@ -10374,7 +10374,7 @@ sl-tab-group::part(tabs) {
   }
 }
 
-`;class ConnectWidget extends h$2.with(State,Query,Spinner){static properties={identities:{store:"page"}};static query={selectDidInput:["#select_did_input",!0]};constructor(){super()}firstUpdated(){DWeb$1.connect.attachInput(this.selectDidInput,{permissions:[{protocolDefinition:profile.definition,permissionScopes:["Query","Read","Subscribe","Write","Delete","Query:Protocols","Query:Messages","Read:Messages","Subscribe:Messages"].map(At=>(At=At.split(":"),{protocol:profile.uri,interface:At[1]||"Records",method:At[0]}))}],onConnect:async(At,xt)=>{console.log(At,xt)},onError:At=>{console.log(At)},onProgress:At=>{console.log(At)}})}render(){return this.connected?ke$2`
+`;class ConnectWidget extends h$2.with(State,Query,Spinner){static properties={identities:{store:"page"}};constructor(){super()}firstUpdated(){}render(){return this.connected?ke$2`
       <div>connected</div>
     `:ke$2`
       <section flex="column center-x center-y">
@@ -10383,9 +10383,6 @@ sl-tab-group::part(tabs) {
           Create a new identity
         </sl-button>
         <div break-text="OR"></div>
-        <div>
-          <input id="select_did_input" name="email" type="email" label="Select a DID" placeholder="social@did:dht:..." autocomplete="on" />
-        </div>
         <sl-button variant="default" size="large" @click="${At=>{}}">
           <sl-icon slot="prefix" name="wallet2"></sl-icon>
           Connect via Wallet
@@ -11487,7 +11484,7 @@ sl-tab-group::part(tabs) {
         padding: 0 0.8rem 0;
         border-bottom: 1px solid rgba(255 255 255 / 1%);
         box-shadow: 0 2px 1px -1px rgba(0 0 0 / 40%);
-        background: hsl(240deg 7% 20% / 90%);
+        background: rgb(47 47 53 / 65%);
         backdrop-filter: blur(10px) saturate(100%);
         -webkit-backdrop-filter: blur(10px) saturate(100%);
         z-index: 1;
@@ -11567,119 +11564,29 @@ sl-tab-group::part(tabs) {
         display: block;
         margin: 1.5rem auto 0;
       }
-    `]}customElements.define("create-identity",CreateIdentity);class PackagesPage extends h$2.with(State,Query,Spinner){static properties={ready:{store:"page"},identities:{store:"page"},identityEndpointUpdate:{type:Object}};static query={createIdentityButton:"#create_identity_button",createIdentityModal:["#create_identity_modal",!0],restoreIdentityButton:"#restore_identity_button",modifyEndpointsModal:["#modify_endpoints_modal",!0]};constructor(){super(),this.lastIdentityLabelSave=Date.now(),this.profileProtocolEncoded=Convert.string(profile.uri).toBase64Url()}firstUpdated(){this.ready.state||this.startSpinner({target:"section",minimum:500,renderImmediate:!0}),this.ready.then(()=>{this.stopSpinner()})}toggleIdentityDetails(At){const xt=At.currentTarget,Bt=xt.closest("li").querySelector("detail-box");Bt.toggle(),xt.firstElementChild.name=Bt.open?"chevron-up":"chevron-down"}generateEndpointItems(At,xt,Bt){return(At.did.document.service||[]).reduce((Nt,jt)=>{if(!Nt&&jt.type==="DecentralizedWebNode"){let Ut=jt.serviceEndpoint||[];Ut=Array.isArray(Ut)?Ut:[Ut],Bt&&(Ut=this.identityEndpointUpdate.endpoints=this.identityEndpointUpdate.endpoints||[...Ut]),Nt=xt(Ut,At)}return Nt},null)}openEndpointModal(At){(!this.identityEndpointUpdate||this.identityEndpointUpdate.identity!==At)&&(this.identityEndpointUpdate={identity:At}),this.modifyEndpointsModal.show()}closeEndpointModal(){this.modifyEndpointsModal.hide()}async updateEndpoints(At){if(!this.identityEndpointUpdate)return;const{identity:xt,endpoints:Bt}=this.identityEndpointUpdate;console.log(Bt);try{const Nt=await DWeb.did.update(xt,jt=>{const Ut=jt.service.find(Lt=>Lt.type==="DecentralizedWebNode");Ut&&(Ut.serviceEndpoint=Bt.reduce((Lt,Ht)=>(Ht=Ht.trim(),Ht.length&&Lt.push(Ht),Lt),[])),Ut.serviceEndpoint=Bt});return At&&this.closeEndpointModal(),Nt}catch{}}async saveIdentityLabel(At,xt){var jt,Ut,Lt;let Bt=At.target.value.trim().toLowerCase(),Nt=((Lt=(Ut=(jt=xt.connectRecord)==null?void 0:jt.cache)==null?void 0:Ut.json)==null?void 0:Lt.label)||"";Bt&&Bt!==Nt&&Date.now()>this.lastIdentityLabelSave+2e3&&(this.lastIdentityLabelSave=Date.now(),await App$1.saveIdentityLabel(xt,Bt).then(Ht=>notify.success("Your profile info was saved")).catch(Ht=>{Ht.target.value=Nt,notify.error("There was an error saving your new label for this identity")}))}render(){var At;return Object.values(this.packages||{}),ke$2`
+    `]}customElements.define("create-identity",CreateIdentity);class PackagesPage extends h$2.with(State,Query,Spinner){static properties={ready:{store:"page"},identities:{store:"page"},identityEndpointUpdate:{type:Object}};static query={createPackageButton:"#create_package_button",createPackageModal:["#create_package_modal",!0]};constructor(){super(),this.profileProtocolEncoded=Convert.string(profile.uri).toBase64Url()}firstUpdated(){this.ready.state||this.startSpinner({target:"section",minimum:500,renderImmediate:!0}),this.ready.then(()=>{this.stopSpinner()})}createPackage(){}render(){const At=Object.values(this.packages||{});return ke$2`
       <section page-section>
-        ${identities!=null&&identities.length?ke$2`
+        ${At!=null&&At.length?ke$2`
             <h2 flex>
-              Identities
+              Packages
 
-              <sl-dropdown id="identity_actions">
-                <sl-button size="small" slot="trigger" caret>Actions</sl-button>
-                <sl-menu>
-                  <sl-menu-item @click="${xt=>this.createIdentityModal.show()}">
-                    <sl-icon slot="prefix" name="person-plus"></sl-icon> Create an Identity
-                  </sl-menu-item>
-                  <sl-menu-item @click="${xt=>App$1.restoreIdentityModal.show()}">
-                    <sl-icon slot="prefix" name="person-up"></sl-icon> Restore an Identity
-                  </sl-menu-item>
-                  <sl-menu-item @click="${xt=>App$1.qrScannerModal.show()}">
-                    <sl-icon slot="prefix" name="window-stack"></sl-icon> Connect an App
-                  </sl-menu-item>
-                </sl-menu>
-              </sl-dropdown>
+
+              <sl-button id="create_package_button" @click="${async xt=>this.openPackageModal()}">Create a Package</sl-button>
 
             </h2>
-            <ul id="identity_list" limit-width>
-              ${identities.map(xt=>{var Nt,jt,Ut;const Bt=xt.connectedDid;return ke$2`
-                <li>
-                  <div flex="center-y">
-                    <a href="/${Bt}">
-                      <sl-avatar image="${xt.avatar||`https://dweb/${Bt}/read/protocols/${this.profileProtocolEncoded}/avatar`}" shape="circle" size="small"></sl-avatar>
-                      ${Bt}
-                    </a> 
-                    <sl-button detail-box-toggle circle size="small" @click="${this.toggleIdentityDetails}">
-                      <sl-icon name="chevron-down"></sl-icon>
-                    </sl-button>
-                  </div>
-                  <detail-box hide-toggle>
-                    <div>
-                      <div columns="2 labels-right">
-                        <span>Identity Label:</span>
-                        <div>
-                          <sl-input size="small" value="${(Ut=(jt=(Nt=xt==null?void 0:xt.connectRecord)==null?void 0:Nt.cache)==null?void 0:jt.json)==null?void 0:Ut.label}" autocomplete="off" placeholder="Ex: social, career, family" 
-                            @sl-input="${Lt=>Lt.target.value=Lt.target.value.trim().toLowerCase()}"
-                            @sl-change="${Lt=>this.saveIdentityLabel(Lt,xt)}"
-                          ></sl-input>
-                        </div>
-
-                        <span>Backup:</span>
-                        <div>
-                          <sl-button size="small" @click="${Lt=>DWeb.identity.backup(xt,{to:"file"})}">
-                            <sl-icon slot="prefix" name="download"></sl-icon> Download identity backup
-                          </sl-button>
-                        </div>
-                      </div>
-
-                      <h3 flex="center-y">
-                        <span>Datastore Locations</span>
-                        <sl-icon-button name="pencil" variant="default" size="medium" @click="${Lt=>this.openEndpointModal(xt)}"></sl-icon-button>
-                      </h3>
-                      ${this.generateEndpointItems(xt,Lt=>ke$2`<div>${Lt.join("<br>")}</div>`)}
-                    </div>
-                  </detail-box>
-                </li>
-              `})}
-            </ul>
-            <!-- <div id="create_restore_buttons" flex="center-x center-y">
-              <sl-button id="create_identity_button" variant="success" size="small" @click="${xt=>this.createIdentityModal.show()}">
-                <sl-icon slot="prefix" name="person-plus"></sl-icon> Create an Identity
-              </sl-button>
-              <sl-button id="restore_identity_button" variant="primary" size="small" @click="${xt=>App$1.restoreIdentityModal.show()}">
-                <sl-icon slot="prefix" name="person-up"></sl-icon> Restore an Identity
-              </sl-button>
-              <sl-button id="restore_identity_button" variant="primary" size="small" @click="${xt=>App$1.qrScannerModal.show()}">
-                <sl-icon slot="prefix" name="window-stack"></sl-icon> Connect an App
-              </sl-button>
-            </div> -->
           `:ke$2`
             <connect-widget></connect-widget>
           `}
       </section>
 
-      <sl-dialog id="create_identity_modal" label="Create an Identity" placement="start" fit-content>
-        <create-identity @identity-created="${xt=>this.createIdentityModal.hide()}"></create-identity>
+      <sl-dialog id="create_package_modal" label="Create a Package" placement="start" fit-content>
+        
       </sl-dialog>
 
-      <sl-dialog id="modify_endpoints_modal" label="Modify Endpoints" placement="start" @sl-after-hide="${xt=>this.identityEndpointUpdate=null}">
-        <div id="modify_endpoints_identity" flex="center-y">
-          ${this.identityEndpointUpdate?ke$2`
-                <sl-avatar image="${((At=this.identityEndpointUpdate.identity)==null?void 0:At.avatar)||`https://dweb/${this.identityEndpointUpdate.identity.connectedDid}/read/protocols/${this.profileProtocolEncoded}/avatar`}" shape="circle" size="small"></sl-avatar>
-                <div>${this.identityEndpointUpdate.identity.connectedDid}</div>
-              `:D$1}
-        </div>
-        <p>This is an advanced feature to edit the datastore locations of the DID above. Do not change these values unless you know what you are doing.</p>
-        <section>
-          ${this.identityEndpointUpdate?this.generateEndpointItems(this.identityEndpointUpdate.identity,xt=>xt.map((Bt,Nt)=>ke$2`
-                  <div index="${Nt}" class="service-endpoint-entry" flex="center-y">
-
-                    <sl-input class="service-endpoint-input" size="small" value="${Bt}" @input="${jt=>{xt[Nt]=jt.target.value}}"></sl-input>
-
-                    <sl-button class="remove-endpoint-button" size="small" @click="${jt=>{xt.splice(Nt,1),this.identityEndpointUpdate={...this.identityEndpointUpdate}}}">
-                        <sl-icon slot="prefix" name="x-lg">
-                      </sl-icon>
-                    </sl-button>
-
-                    <sl-button class="add-endpoint-button" size="small" @click="${jt=>{xt.push(""),this.identityEndpointUpdate={...this.identityEndpointUpdate}}}">
-                      <sl-icon slot="prefix" name="plus-lg"></sl-icon>
-                    </sl-button>
-                  </div>
-                `),!0):D$1}
-        </section>
-        <sl-button id="close_endpoints_button" slot="footer" @click="${async xt=>this.closeEndpointModal()}">Close</sl-button>
-        <sl-button id="submit_endpoints_button" slot="footer" variant="success" @click="${async xt=>this.updateEndpoints(!0)}">Submit</sl-button>
+      <sl-dialog id="open_package_modal" label="Create a Package" placement="start">
+        <sl-button slot="footer" @click="${async xt=>this.openPackageModal.hide()}">Close</sl-button>
+        <sl-button id="submit_endpoints_button" slot="footer" variant="success" @click="${async xt=>this.createPackage()}">Create</sl-button>
       </sl-dialog>
-
-      
     `}static styles=[PageStyles,SpinnerStyles,i$7`
       :host > section {
         
@@ -11812,7 +11719,7 @@ sl-tab-group::part(tabs) {
       <section page-section>
         ${At!=null&&At.length?ke$2`
             <h2 flex>
-              Identities
+              Publication IDs
 
               <sl-dropdown id="identity_actions">
                 <sl-button size="small" slot="trigger" caret>Actions</sl-button>
@@ -12066,7 +11973,7 @@ sl-tab-group::part(tabs) {
         </a>
         <a href="/packages" ?active="${location.pathname.startsWith("/packages")}">
           <sl-icon slot="prefix" name="box-seam"></sl-icon>
-          My Packages
+          Packages
         </a>
         <a href="/identities" ?active="${location.pathname.startsWith("/identities")}">
           <sl-icon slot="prefix" name="people"></sl-icon>
@@ -12076,9 +11983,9 @@ sl-tab-group::part(tabs) {
       <sl-button id="drawer_close_button" variant="text" @click="${xt=>this.appLayout.drawerOpened=!1}">
         <sl-icon slot="prefix" name="x-lg" ></sl-icon>
       </sl-button>
-      
 
       <directory-page id="directory" page="full-width"></directory-page>
+      <packages-page id="packages" page="full-width"></packages-page>
       <identities-page id="identities" page></identities-page>
       <connect-page id="connect" page></connect-page>
 
@@ -12135,17 +12042,34 @@ sl-tab-group::part(tabs) {
         height: 100%;
       }
 
-      #app_layout::part(navbar){
-        /* position: sticky;
-        top: 0; */
-        display: flex;
-        align-items: center;
-        height: var(--header-height);
-        min-height: var(--header-height);
-        padding: 0 0.65rem;
-        background: #cb0101;
-        box-shadow: 0 0 2px 1px rgba(0 0 0 / 25%);
-        user-select: none;
+      #app_layout {
+        --vaadin-app-layout-drawer-width: var(--nav-width);
+        height: 100%;
+
+        &::part(navbar){
+          /* position: sticky;
+          top: 0; */
+          display: flex;
+          align-items: center;
+          height: var(--header-height);
+          min-height: var(--header-height);
+          padding: 0 0.65rem;
+          background: #cb0101;
+          box-shadow: 0 0 2px 1px rgba(0 0 0 / 25%);
+          user-select: none;
+        }
+
+        &::part(drawer) {
+          overflow: visible;
+          padding: 0.6rem 0;
+          background: var(--grey);
+          border-right: 1px solid rgba(0 0 0 / 60%);
+          box-shadow: 0 0 2px 1px rgba(0 0 0 / 25%);
+        }
+
+        &::part(backdrop) {
+          background-color: rgba(0 0 0 / 75%);
+        }
       }
 
       #nav_toggle {
@@ -12182,13 +12106,6 @@ sl-tab-group::part(tabs) {
       :host-context(html.sl-scroll-lock) #pages {
         z-index: 3;
       } 
-
-      #app_layout::part(drawer) {
-        overflow: visible;
-        padding: 0.6rem 0;
-        background: var(--grey);
-        border-right: 1px solid rgba(0 0 0 / 60%);
-      }
 
       #drawer_close_button {
         position: fixed;
@@ -12251,10 +12168,6 @@ sl-tab-group::part(tabs) {
 
       #nav a[active] sl-icon {
         color: currentColor;
-      }
-
-      #app_layout::part(backdrop) {
-        background-color: rgba(0 0 0 / 75%);
       }
 
       #app_layout [page] {
