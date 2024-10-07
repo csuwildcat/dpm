@@ -22,15 +22,12 @@ export class PackagesPage extends LitElement.with(State, Query, Spinner) {
   }
 
   static query = {
-    createIdentityButton: '#create_identity_button',
-    createIdentityModal: ['#create_identity_modal', true],
-    restoreIdentityButton: '#restore_identity_button',
-    modifyEndpointsModal: ['#modify_endpoints_modal', true]
+    createPackageButton: '#create_package_button',
+    createPackageModal: ['#create_package_modal', true]
   }
 
   constructor() {
     super();
-    this.lastIdentityLabelSave = Date.now();
     this.profileProtocolEncoded = Convert.string(protocols.profile.uri).toBase64Url();
   }
 
@@ -44,70 +41,10 @@ export class PackagesPage extends LitElement.with(State, Query, Spinner) {
     })
   }
 
-  toggleIdentityDetails(e){
-    const toggle = e.currentTarget;
-    const target = toggle.closest('li').querySelector('detail-box');
-    target.toggle();
-    toggle.firstElementChild.name = target.open ? 'chevron-up' : 'chevron-down';
-  }
+  createPackage() {
 
-  generateEndpointItems(identity, fn, editing) {
-    return (identity.did.document.service || []).reduce((template, service) => {
-      if (!template && service.type === 'DecentralizedWebNode') {
-        let endpoints = service.serviceEndpoint || [];
-        endpoints = Array.isArray(endpoints) ? endpoints : [endpoints];
-        if (editing) endpoints = this.identityEndpointUpdate.endpoints = this.identityEndpointUpdate.endpoints || [...endpoints];
-        template = fn(endpoints, identity);
-      }
-      return template;
-    }, null)
-  }
+    const packageData = { };
 
-  openEndpointModal(identity) {
-    if (!this.identityEndpointUpdate || this.identityEndpointUpdate.identity !== identity) {
-      this.identityEndpointUpdate = { identity };
-    }
-    this.modifyEndpointsModal.show();
-  }
-
-  closeEndpointModal() {
-    this.modifyEndpointsModal.hide();
-  }
-
-  async updateEndpoints(autoClose) {
-    if (!this.identityEndpointUpdate) return;
-    const { identity, endpoints } = this.identityEndpointUpdate;
-    console.log(endpoints);
-    try {
-      const result = await DWeb.did.update(identity, doc => {
-        const entry = doc.service.find(service => service.type === 'DecentralizedWebNode');
-        if (entry) {
-          entry.serviceEndpoint = endpoints.reduce((filtered, endpoint) => {
-            endpoint = endpoint.trim();
-            if (endpoint.length) filtered.push(endpoint);
-            return filtered;
-          }, []);
-        }
-        entry.serviceEndpoint = endpoints;
-      });
-      if (autoClose) this.closeEndpointModal();
-      return result;
-    }
-    catch(e){}
-  }
-
-  async saveIdentityLabel(e, identity) {
-    let label = e.target.value.trim().toLowerCase();
-    let currentLabel = identity.connectRecord?.cache?.json?.label || '';
-    if (label && label !== currentLabel && Date.now() > this.lastIdentityLabelSave + 2000) {
-      this.lastIdentityLabelSave = Date.now();
-      await App.saveIdentityLabel(identity, label)
-        .then(e => notify.success('Your profile info was saved'))
-        .catch(e => {
-          e.target.value = currentLabel;
-          notify.error('There was an error saving your new label for this identity');
-        });
-    }
   }
 
   render() {
@@ -115,140 +52,30 @@ export class PackagesPage extends LitElement.with(State, Query, Spinner) {
 
     return html`
       <section page-section>
-        ${ !identities?.length ? 
+        ${ !packages?.length ? 
           html`
             <connect-widget></connect-widget>
           ` : 
           html`
             <h2 flex>
-              Identities
+              Packages
 
-              <sl-dropdown id="identity_actions">
-                <sl-button size="small" slot="trigger" caret>Actions</sl-button>
-                <sl-menu>
-                  <sl-menu-item @click="${ e => this.createIdentityModal.show() }">
-                    <sl-icon slot="prefix" name="person-plus"></sl-icon> Create an Identity
-                  </sl-menu-item>
-                  <sl-menu-item @click="${ e => App.restoreIdentityModal.show() }">
-                    <sl-icon slot="prefix" name="person-up"></sl-icon> Restore an Identity
-                  </sl-menu-item>
-                  <sl-menu-item @click="${ e => App.qrScannerModal.show()}">
-                    <sl-icon slot="prefix" name="window-stack"></sl-icon> Connect an App
-                  </sl-menu-item>
-                </sl-menu>
-              </sl-dropdown>
+
+              <sl-button id="create_package_button" @click="${ async e => this.openPackageModal() }">Create a Package</sl-button>
 
             </h2>
-            <ul id="identity_list" limit-width>
-              ${identities.map(identity => {
-                const did = identity.connectedDid;
-                return html`
-                <li>
-                  <div flex="center-y">
-                    <a href="/${did}">
-                      <sl-avatar image="${identity.avatar || `https://dweb/${did}/read/protocols/${this.profileProtocolEncoded}/avatar`}" shape="circle" size="small"></sl-avatar>
-                      ${did}
-                    </a> 
-                    <sl-button detail-box-toggle circle size="small" @click="${this.toggleIdentityDetails}">
-                      <sl-icon name="chevron-down"></sl-icon>
-                    </sl-button>
-                  </div>
-                  <detail-box hide-toggle>
-                    <div>
-                      <div columns="2 labels-right">
-                        <span>Identity Label:</span>
-                        <div>
-                          <sl-input size="small" value="${identity?.connectRecord?.cache?.json?.label}" autocomplete="off" placeholder="Ex: social, career, family" 
-                            @sl-input="${e => e.target.value = e.target.value.trim().toLowerCase()}"
-                            @sl-change="${e => this.saveIdentityLabel(e, identity)}"
-                          ></sl-input>
-                        </div>
-
-                        <span>Backup:</span>
-                        <div>
-                          <sl-button size="small" @click="${ e => DWeb.identity.backup(identity, { to: 'file' }) }">
-                            <sl-icon slot="prefix" name="download"></sl-icon> Download identity backup
-                          </sl-button>
-                        </div>
-                      </div>
-
-                      <h3 flex="center-y">
-                        <span>Datastore Locations</span>
-                        <sl-icon-button name="pencil" variant="default" size="medium" @click="${ e => this.openEndpointModal(identity) }"></sl-icon-button>
-                      </h3>
-                      ${this.generateEndpointItems(identity, endpoints => html`<div>${endpoints.join('<br>')}</div>`)}
-                    </div>
-                  </detail-box>
-                </li>
-              `})}
-            </ul>
-            <!-- <div id="create_restore_buttons" flex="center-x center-y">
-              <sl-button id="create_identity_button" variant="success" size="small" @click="${ e => this.createIdentityModal.show() }">
-                <sl-icon slot="prefix" name="person-plus"></sl-icon> Create an Identity
-              </sl-button>
-              <sl-button id="restore_identity_button" variant="primary" size="small" @click="${ e => App.restoreIdentityModal.show() }">
-                <sl-icon slot="prefix" name="person-up"></sl-icon> Restore an Identity
-              </sl-button>
-              <sl-button id="restore_identity_button" variant="primary" size="small" @click="${ e => App.qrScannerModal.show()}">
-                <sl-icon slot="prefix" name="window-stack"></sl-icon> Connect an App
-              </sl-button>
-            </div> -->
           `
         }
       </section>
 
-      <sl-dialog id="create_identity_modal" label="Create an Identity" placement="start" fit-content>
-        <create-identity @identity-created="${e => this.createIdentityModal.hide() }"></create-identity>
+      <sl-dialog id="create_package_modal" label="Create a Package" placement="start" fit-content>
+        
       </sl-dialog>
 
-      <sl-dialog id="modify_endpoints_modal" label="Modify Endpoints" placement="start" @sl-after-hide="${ e => this.identityEndpointUpdate = null }">
-        <div id="modify_endpoints_identity" flex="center-y">
-          ${
-            this.identityEndpointUpdate ?
-              html`
-                <sl-avatar image="${this.identityEndpointUpdate.identity?.avatar || `https://dweb/${this.identityEndpointUpdate.identity.connectedDid}/read/protocols/${this.profileProtocolEncoded}/avatar`}" shape="circle" size="small"></sl-avatar>
-                <div>${this.identityEndpointUpdate.identity.connectedDid}</div>
-              ` : nothing
-          }
-        </div>
-        <p>This is an advanced feature to edit the datastore locations of the DID above. Do not change these values unless you know what you are doing.</p>
-        <section>
-          ${
-            this.identityEndpointUpdate ? 
-              this.generateEndpointItems(this.identityEndpointUpdate.identity, (endpoints) => {
-                return endpoints.map((endpoint, index) => {
-                  return html`
-                  <div index="${index}" class="service-endpoint-entry" flex="center-y">
-
-                    <sl-input class="service-endpoint-input" size="small" value="${endpoint}" @input="${e => {
-                      endpoints[index] = e.target.value;
-                    }}"></sl-input>
-
-                    <sl-button class="remove-endpoint-button" size="small" @click="${ e => {
-                          endpoints.splice(index, 1)
-                          this.identityEndpointUpdate = { ...this.identityEndpointUpdate };
-                        }}">
-                        <sl-icon slot="prefix" name="x-lg">
-                      </sl-icon>
-                    </sl-button>
-
-                    <sl-button class="add-endpoint-button" size="small" @click="${ e => {
-                        endpoints.push('');
-                        this.identityEndpointUpdate = { ...this.identityEndpointUpdate };
-                      }}">
-                      <sl-icon slot="prefix" name="plus-lg"></sl-icon>
-                    </sl-button>
-                  </div>
-                `})
-              }, true) :
-              nothing
-          }
-        </section>
-        <sl-button id="close_endpoints_button" slot="footer" @click="${ async e => this.closeEndpointModal() }">Close</sl-button>
-        <sl-button id="submit_endpoints_button" slot="footer" variant="success" @click="${ async e => this.updateEndpoints(true) }">Submit</sl-button>
+      <sl-dialog id="open_package_modal" label="Create a Package" placement="start">
+        <sl-button slot="footer" @click="${ async e => this.openPackageModal.hide() }">Close</sl-button>
+        <sl-button id="submit_endpoints_button" slot="footer" variant="success" @click="${ async e => this.createPackage() }">Create</sl-button>
       </sl-dialog>
-
-      
     `
   }
 

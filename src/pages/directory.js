@@ -119,7 +119,7 @@ export class DirectoryPage extends LitElement.with(State, Query, Spinner) {
         padding: 0 0.8rem 0;
         border-bottom: 1px solid rgba(255 255 255 / 1%);
         box-shadow: 0 2px 1px -1px rgba(0 0 0 / 40%);
-        background: hsl(240deg 7% 20% / 90%);
+        background: rgb(47 47 53 / 65%);
         backdrop-filter: blur(10px) saturate(100%);
         -webkit-backdrop-filter: blur(10px) saturate(100%);
         z-index: 1;

@@ -462,8 +462,8 @@ class Datastore {
     return story._hero = hero;
   }
 
-  async queryThreads(options = {}){
-    const response = await this.queryProtocolRecords('social', 'thread', options);
+  async queryPackages(options = {}){
+    const response = await this.queryProtocolRecords('dpm', 'package', options);
     if (options.cache !== false) await cacheJson(response.records);
     return response;
   }

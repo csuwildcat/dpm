@@ -15,10 +15,13 @@ const dpmDefinition = {
   protocol  : 'https://dpm.software/docs/protocol',
   published : true,
   types     : {
+    publisher : {
+      dataFormats : ['application/json'],
+    },
     package : {
       dataFormats : ['application/json'],
     },
-    icon : {
+    logo : {
       dataFormats : ['image/gif', 'image/png', 'image/jpeg']
     },
     release : {
@@ -30,6 +33,9 @@ const dpmDefinition = {
     }
   },
   structure : {
+    publisher: {
+      $role: true,
+    },
     package : {
       $tags : {
         name : {
@@ -44,8 +50,12 @@ const dpmDefinition = {
           can : ['create', 'update', 'delete'],
         },
         {
+          role : 'publisher',
+          can : ['create', 'update', 'delete'],
+        },
+        {
           role : 'package/admin',
-          can : ['co-update']
+          can : ['co-update', 'co-delete']
         }
       ],
       admin: {
@@ -162,5 +172,5 @@ export const dpm = {
 
 export const byUri = {
   [profileDefinition.protocol]: profile,
-  // [socialDefinition.protocol]: social,
+  // [socialDefinition.protocol]: dpm,
 }

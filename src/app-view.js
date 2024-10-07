@@ -141,7 +141,7 @@ export class AppView extends LitElement.with($App, State, Query) {
         </a>
         <a href="/packages" ?active="${location.pathname.startsWith('/packages')}">
           <sl-icon slot="prefix" name="box-seam"></sl-icon>
-          My Packages
+          Packages
         </a>
         <a href="/identities" ?active="${location.pathname.startsWith('/identities')}">
           <sl-icon slot="prefix" name="people"></sl-icon>
@@ -151,9 +151,9 @@ export class AppView extends LitElement.with($App, State, Query) {
       <sl-button id="drawer_close_button" variant="text" @click="${e => this.appLayout.drawerOpened = false}">
         <sl-icon slot="prefix" name="x-lg" ></sl-icon>
       </sl-button>
-      
 
       <directory-page id="directory" page="full-width"></directory-page>
+      <packages-page id="packages" page="full-width"></packages-page>
       <identities-page id="identities" page></identities-page>
       <connect-page id="connect" page></connect-page>
 
@@ -219,17 +219,34 @@ export class AppView extends LitElement.with($App, State, Query) {
         height: 100%;
       }
 
-      #app_layout::part(navbar){
-        /* position: sticky;
-        top: 0; */
-        display: flex;
-        align-items: center;
-        height: var(--header-height);
-        min-height: var(--header-height);
-        padding: 0 0.65rem;
-        background: #cb0101;
-        box-shadow: 0 0 2px 1px rgba(0 0 0 / 25%);
-        user-select: none;
+      #app_layout {
+        --vaadin-app-layout-drawer-width: var(--nav-width);
+        height: 100%;
+
+        &::part(navbar){
+          /* position: sticky;
+          top: 0; */
+          display: flex;
+          align-items: center;
+          height: var(--header-height);
+          min-height: var(--header-height);
+          padding: 0 0.65rem;
+          background: #cb0101;
+          box-shadow: 0 0 2px 1px rgba(0 0 0 / 25%);
+          user-select: none;
+        }
+
+        &::part(drawer) {
+          overflow: visible;
+          padding: 0.6rem 0;
+          background: var(--grey);
+          border-right: 1px solid rgba(0 0 0 / 60%);
+          box-shadow: 0 0 2px 1px rgba(0 0 0 / 25%);
+        }
+
+        &::part(backdrop) {
+          background-color: rgba(0 0 0 / 75%);
+        }
       }
 
       #nav_toggle {
@@ -266,13 +283,6 @@ export class AppView extends LitElement.with($App, State, Query) {
       :host-context(html.sl-scroll-lock) #pages {
         z-index: 3;
       } 
-
-      #app_layout::part(drawer) {
-        overflow: visible;
-        padding: 0.6rem 0;
-        background: var(--grey);
-        border-right: 1px solid rgba(0 0 0 / 60%);
-      }
 
       #drawer_close_button {
         position: fixed;
@@ -335,10 +345,6 @@ export class AppView extends LitElement.with($App, State, Query) {
 
       #nav a[active] sl-icon {
         color: currentColor;
-      }
-
-      #app_layout::part(backdrop) {
-        background-color: rgba(0 0 0 / 75%);
       }
 
       #app_layout [page] {

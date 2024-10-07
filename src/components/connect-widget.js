@@ -15,44 +15,12 @@ export class ConnectWidget extends LitElement.with(State, Query, Spinner) {
     identities: { store: 'page' }
   }
 
-  static query = {
-    selectDidInput: ['#select_did_input', true]
-  }
-
   constructor() {
     super()
   }
 
   firstUpdated() {
-    DWeb.connect.attachInput(this.selectDidInput, {
-      permissions: [
-        {
-          protocolDefinition : protocols.profile.definition,
-          permissionScopes   : 
-            [
-             'Query', 'Read', 'Subscribe', 'Write', 'Delete',
-             'Query:Protocols',
-             'Query:Messages', 'Read:Messages', 'Subscribe:Messages'
-            ].map(scope => {
-              scope = scope.split(':');
-              return {
-                protocol  : protocols.profile.uri,
-                interface : scope[1] || 'Records',
-                method    : scope[0]
-              }
-            })
-        }
-      ],
-      onConnect: async (did, connection) => {
-        console.log(did, connection);
-      },
-      onError: (e) => {
-        console.log(e);
-      },
-      onProgress: (p) => {  
-        console.log(p);
-      }
-    });
+    
   }
 
   render() {
@@ -74,9 +42,6 @@ export class ConnectWidget extends LitElement.with(State, Query, Spinner) {
           Create a new identity
         </sl-button>
         <div break-text="OR"></div>
-        <div>
-          <input id="select_did_input" name="email" type="email" label="Select a DID" placeholder="social@did:dht:..." autocomplete="on" />
-        </div>
         <sl-button variant="default" size="large" @click="${ e => {} }">
           <sl-icon slot="prefix" name="wallet2"></sl-icon>
           Connect via Wallet

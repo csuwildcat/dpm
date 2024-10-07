@@ -122,7 +122,7 @@ export class IdentitiesPage extends LitElement.with(State, Query, Spinner) {
           ` : 
           html`
             <h2 flex>
-              Identities
+              Publication IDs
 
               <sl-dropdown id="identity_actions">
                 <sl-button size="small" slot="trigger" caret>Actions</sl-button>

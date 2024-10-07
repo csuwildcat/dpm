@@ -32,12 +32,29 @@ async function initializeIdentities(list){
   return identities;
 }
 
+async function initializePackages(){
+  await App.ready;
+  return this.packages || new Promise(async resolve => {
+    const promises = [];
+    const packages = [];
+    for (let identity in this.identities) {
+      const datastore = this.identities[identity].datastore;
+      promises.push(datastore.queryPackages().then(async ({ records }) => {
+        packages.concat(records);
+      }));
+    }
+    await Promise.all(promises);
+    resolve(this.packages = packages);
+  });
+}
+
 let App;
 const $App = (superClass) => class extends superClass.with(State) {
 
   static properties = {
     ready: { store: 'page' },
     identities: { store: 'page' },
+    packages: { store: 'page' },
     avatars: { store: 'page' }
   }
 
@@ -81,6 +98,11 @@ const $App = (superClass) => class extends superClass.with(State) {
   async addIdentity(identity){
     await initializeIdentities(identity);
     return this.identities = { ...(this.identities || {}), [DWeb.identity.uriFrom(identity)]: identity }; 
+  }
+
+  async addPackage(pkg){
+    await initializePackages();
+    return this.packages = [...this.packages, pkg]; 
   }
 
   async saveIdentityLabel(identity, label){
