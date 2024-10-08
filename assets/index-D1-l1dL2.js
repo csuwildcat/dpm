@@ -11522,7 +11522,7 @@ sl-tab-group::part(tabs) {
         }
 
       #placeholder sl-icon{
-        color: var(--sl-color-primary-600);
+        color: #777;
       }
 
       .spinner-mixin {
@@ -11564,136 +11564,79 @@ sl-tab-group::part(tabs) {
         display: block;
         margin: 1.5rem auto 0;
       }
-    `]}customElements.define("create-identity",CreateIdentity);class PackagesPage extends h$2.with(State,Query,Spinner){static properties={ready:{store:"page"},identities:{store:"page"},identityEndpointUpdate:{type:Object}};static query={createPackageButton:"#create_package_button",createPackageModal:["#create_package_modal",!0]};constructor(){super(),this.profileProtocolEncoded=Convert.string(profile.uri).toBase64Url()}firstUpdated(){this.ready.state||this.startSpinner({target:"section",minimum:500,renderImmediate:!0}),this.ready.then(()=>{this.stopSpinner()})}createPackage(){}render(){const At=Object.values(this.packages||{});return ke$2`
+    `]}customElements.define("create-identity",CreateIdentity);class PackagesPage extends h$2.with(State,Query,Spinner){static properties={ready:{store:"page"},identities:{store:"page"},identityEndpointUpdate:{type:Object}};static query={createPackageButton:"#create_package_button",createPackageModal:["#create_package_modal",!0],publishReleaseModal:["#publish_release_modal",!0]};constructor(){super(),this.profileProtocolEncoded=Convert.string(profile.uri).toBase64Url()}firstUpdated(){this.ready.state||this.startSpinner({target:"section",minimum:500,renderImmediate:!0}),this.ready.then(()=>{this.stopSpinner()})}createPackage(){}publishRelease(){}render(){const At=Object.values(this.identities||{}),xt=Object.values(this.packages||{});return ke$2`
       <section page-section>
-        ${At!=null&&At.length?ke$2`
-            <h2 flex>
-              Packages
-
-
-              <sl-button id="create_package_button" @click="${async xt=>this.openPackageModal()}">Create a Package</sl-button>
-
-            </h2>
-          `:ke$2`
-            <connect-widget></connect-widget>
-          `}
+        ${At!=null&&At.length?xt!=null&&xt.length?ke$2`
+              <h2 flex>
+                Packages
+                <sl-button id="create_package_button" @click="${Bt=>this.createPackageModal.show()}">Create a Package</sl-button>
+              </h2>
+            `:ke$2`
+              <div id="placeholder" default-content="placeholder">
+                <sl-icon name="box-seam"></sl-icon>
+                <p>Looks like you don't have any packages, create your first one now.</p>
+                <sl-button variant="success" @click="${Bt=>this.createPackageModal.show()}">Create a Package</sl-button>
+              </div>
+            `:ke$2` <connect-widget></connect-widget>`}
       </section>
 
-      <sl-dialog id="create_package_modal" label="Create a Package" placement="start" fit-content>
-        
+      <sl-dialog id="create_package_modal" label="Create a Package" placement="start">
+
+        <sl-input id="create_package_link_input" label="Add from project link" placeholder="Supported links: GitHub repos" @input="${Bt=>{this.createPackageModal.querySelectorAll(".manual-package-create-input").forEach(Nt=>Nt.disabled=!!Bt.target.value)}}"></sl-input>
+
+        <div break-text="OR"></div>
+
+        <sl-input class="manual-package-create-input" name="name" label="Name" help-text="Give your package a name" @input="${Bt=>{this.createPackageModal.querySelector("#create_package_link_input").disabled=!!Bt.target.value}}"></sl-input>
+        <sl-textarea class="manual-package-create-input" name="description" label="Description" help-text="Add a description of what your package does" @input="${Bt=>{this.createPackageModal.querySelector("#create_package_link_input").disabled=!!Bt.target.value}}"></sl-textarea>
+
+        <sl-button slot="footer" @click="${Bt=>this.createPackageModal.hide()}">Close</sl-button>
+        <sl-button id="submit_endpoints_button" slot="footer" variant="success" @click="${Bt=>this.createPackage()}">Create</sl-button>
       </sl-dialog>
 
-      <sl-dialog id="open_package_modal" label="Create a Package" placement="start">
-        <sl-button slot="footer" @click="${async xt=>this.openPackageModal.hide()}">Close</sl-button>
-        <sl-button id="submit_endpoints_button" slot="footer" variant="success" @click="${async xt=>this.createPackage()}">Create</sl-button>
-      </sl-dialog>
+      <sl-dialog id="publish_release_modal" label="Publish a Release" placement="start">
+          <sl-tab-group>
+
+            <sl-tab slot="nav" panel="link">Add via link</sl-tab>
+            <sl-tab slot="nav" panel="upload">Upload files</sl-tab>
+            
+            <sl-tab-panel name="link">
+
+            </sl-tab-panel>
+
+            <sl-tab-panel name="upload">
+
+            </sl-tab-panel>
+
+          </sl-tab-group>
+
+        <sl-button slot="footer" @click="${Bt=>this.createPackageModal.hide()}">Close</sl-button>
+        <sl-button id="submit_endpoints_button" slot="footer" variant="success" @click="${Bt=>this.createPackage()}">Publish</sl-button>
+      </sl-dialog> 
     `}static styles=[PageStyles,SpinnerStyles,i$7`
-      :host > section {
-        
-      }
-
-      #identity_actions {
-        margin-left: auto;
-      }
 
       connect-widget {
         align-self: center;
       }
 
-      #identity_list li {
-        --border: 1px solid rgb(255 255 255 / 8%);
-        list-style: none;
-        border-bottom: var(--border);
+      #placeholder {
+        text-align: center;
+        
+        & sl-icon {
+          color: #777;
+        }
+        & sl-button {
+          margin-top: 1rem;
+        }
       }
 
-      #identity_list li:first-child {
-        border-top: var(--border);
-      } 
-
-      #identity_list a {
-        width: 100%;
-        padding: 1.1rem 0 1rem;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        text-decoration: none;
-        color: var(--sl-color-blue-700);
-        cursor: pointer;
-      }
-
-      #identity_list sl-avatar {
-        --size: 2.25rem;
-        margin: 0 0.5rem 0 0;
-      }
-
-      #identity_list [detail-box-toggle] {
-        margin: 0 0 0 0.75rem;
-      }
-
-      #identity_list detail-box {
-        max-height: 0;
-      }
-
-      #identity_list detail-box > :first-child {
-        margin-bottom: 1rem;
-        padding: 1.2rem 1.1rem;
-        background: rgb(183 192 254 / 4%);
-        border: 1px solid rgb(183 192 254 / 9%);
-        border-radius: 5px;
-      }
-
-      #identity_list detail-box h3 {
-        margin: 1.75rem 0 1rem;
-        border-bottom: 1px solid rgba(255 255 255 / 8%);
-        padding: 0 0 0.25rem;
-      }
-
-      #identity_list detail-box h3 :not(span) {
-        margin: 0 0 0 auto;
-      }
-
-      #create_restore_buttons {
-        margin: 2rem 0 0;
-      }
-
-      #create_restore_buttons sl-button {
-        margin: 0 0.5rem;
+      #create_package_button {
+        margin-left: auto;
       }
 
     /* Modify Endpoints Dialog */
 
       #modify_endpoints_modal::part(panel) {
         max-width: 500px;
-      }
-
-      .service-endpoint-entry:not(:last-child) {
-        margin-bottom: 1rem;
-      }
-
-      .service-endpoint-input {
-        flex: 1;
-        margin: 0;
-      }
-
-      .service-endpoint-input ~ sl-button {
-        margin: 0 0 0 0.5rem;
-      }
-
-      .service-endpoint-entry sl-icon {
-        stroke: currentColor;
-      }
-
-      .service-endpoint-entry .remove-endpoint-button::part(base) {
-        color: #ff2e2e;
-      }
-
-      .service-endpoint-entry .add-endpoint-button::part(base) {
-        color: #00ba00;
-      }
-
-      .service-endpoint-entry:not(:last-child) .add-endpoint-button {
-        visibility: hidden;
-        pointer-events: none;
       }
 
       #modify_endpoints_identity sl-avatar {
@@ -11985,7 +11928,7 @@ sl-tab-group::part(tabs) {
       </sl-button>
 
       <directory-page id="directory" page="full-width"></directory-page>
-      <packages-page id="packages" page="full-width"></packages-page>
+      <packages-page id="packages" page></packages-page>
       <identities-page id="identities" page></identities-page>
       <connect-page id="connect" page></connect-page>
 
