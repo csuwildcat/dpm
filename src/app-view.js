@@ -153,7 +153,7 @@ export class AppView extends LitElement.with($App, State, Query) {
       </sl-button>
 
       <directory-page id="directory" page="full-width"></directory-page>
-      <packages-page id="packages" page="full-width"></packages-page>
+      <packages-page id="packages" page></packages-page>
       <identities-page id="identities" page></identities-page>
       <connect-page id="connect" page></connect-page>
 

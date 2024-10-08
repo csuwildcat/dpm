@@ -157,7 +157,7 @@ export class DirectoryPage extends LitElement.with(State, Query, Spinner) {
         }
 
       #placeholder sl-icon{
-        color: var(--sl-color-primary-600);
+        color: #777;
       }
 
       .spinner-mixin {
