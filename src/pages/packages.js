@@ -13,6 +13,14 @@ import PageStyles from '../styles/page.js';
 
 import { State, Query, Spinner, SpinnerStyles } from '../components/mixins/index.js';
 
+const packageNameRegex = /^[a-zA-Z0-9\-]*/;
+const supportedApps = {
+  'api.github.com': json => {
+    const { name, description } = json;
+    return { name, description };
+  }
+};
+
 export class PackagesPage extends LitElement.with(State, Query, Spinner) {
 
   static properties = {
@@ -24,7 +32,9 @@ export class PackagesPage extends LitElement.with(State, Query, Spinner) {
   static query = {
     createPackageButton: '#create_package_button',
     createPackageModal: ['#create_package_modal', true],
-    publishReleaseModal: ['#publish_release_modal', true]
+    publishReleaseModal: ['#publish_release_modal', true],
+    autoCreatePackageInput: ['#auto_create_package_input', true],
+    manualCreatePackageName: ['#manual_create_package_name', true]
   }
 
   constructor() {
@@ -42,8 +52,26 @@ export class PackagesPage extends LitElement.with(State, Query, Spinner) {
     })
   }
 
-  createPackage() {
+  async createPackage() {
+    let url;
+    let data;
+    try { url = new URL(this.autoCreatePackageInput.value) }
+    catch (e) { url = null; }
+    if (url && supportedApps[url.host]) {
+      const json = await fetch(url.href).then(res => res.json());
+      data = supportedApps[url.host](json);
+      data.repo = url.href;
+    }
+    else if (this.manualCreatePackageName.value) {
 
+    }
+    else {
+      notify.warning('You must enter at least a project link or package name to create a new package.');
+      return;
+    }
+    if (!this?.packages?.find(record => record.tags.name === data.name)) {
+      console.log(data);
+    }
   }
 
   publishRelease() {
@@ -77,17 +105,17 @@ export class PackagesPage extends LitElement.with(State, Query, Spinner) {
 
       <sl-dialog id="create_package_modal" label="Create a Package" placement="start">
 
-        <sl-input id="create_package_link_input" label="Add from project link" placeholder="Supported links: GitHub repos" @input="${ e => {
-          this.createPackageModal.querySelectorAll('.manual-package-create-input').forEach(input => input.disabled = !!e.target.value);
+        <sl-input id="auto_create_package_input" label="Add from project link" placeholder="Supported links: GitHub repos" @input="${ e => {
+          this.createPackageModal.querySelectorAll('.manual-create-package-input').forEach(input => input.disabled = !!e.target.value);
         }}"></sl-input>
 
-        <div break-text="OR"></div>
+        <div divider>OR</div>
 
-        <sl-input class="manual-package-create-input" name="name" label="Name" help-text="Give your package a name" @input="${ e => {
-          this.createPackageModal.querySelector('#create_package_link_input').disabled = !!e.target.value;
+        <sl-input id="manual_create_package_name" class="manual-create-package-input" name="name" label="Name" help-text="Give your package a name" @input="${ e => {
+          this.createPackageModal.querySelector('#auto_create_package_input').disabled = !!e.target.value;
         }}"></sl-input>
-        <sl-textarea class="manual-package-create-input" name="description" label="Description" help-text="Add a description of what your package does" @input="${ e => {
-          this.createPackageModal.querySelector('#create_package_link_input').disabled = !!e.target.value;
+        <sl-textarea class="manual-create-package-input" name="description" label="Description" help-text="Add a description of what your package does" @input="${ e => {
+          this.createPackageModal.querySelector('#auto_create_package_input').disabled = !!e.target.value;
         }}"></sl-textarea>
 
         <sl-button slot="footer" @click="${ e => this.createPackageModal.hide() }">Close</sl-button>

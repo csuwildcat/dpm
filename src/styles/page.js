@@ -261,6 +261,30 @@ sl-tab-group::part(tabs) {
   font-family: var(--app-font);
 }
 
+[divider] {
+  display: flex;
+  margin: 2rem 0;
+  align-items: center;
+  text-align: center;
+  white-space: nowrap;
+}
+
+[divider]::before,
+[divider]::after {
+  content: '';
+  flex-grow: 1;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+[divider]::before {
+  margin: 3px 0.5rem 0 0; /* Space between the line and the word */
+}
+
+[divider]::after {
+  margin: 3px 0 0 0.5rem; /* Space between the word and the line */
+}
+
 [break-text] {
   display: block;
   position: relative;

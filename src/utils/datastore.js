@@ -468,6 +468,16 @@ class Datastore {
     return response;
   }
 
+  async createPackage(options = {}) {
+    const { record, status } = await this.createProtocolRecord('dpm', 'package', {
+      published: false,
+      data: options.data || {},
+      dataFormat: 'application/json'
+    })
+    if (options.cache !== false) await cacheJson(record)
+    return record;
+  }
+
   // getPostsAfter = (options = {}) => {
   //   return this.queryProtocolRecords('profile', 'avatar', Object.assign({
   //     sort: 'createdDescending',
