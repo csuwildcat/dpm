@@ -12,6 +12,10 @@ import {
 } from './helpers';
 
 import {
+  modifyProtocolsObject
+} from './protocols';
+
+import {
   triggerDownload,
   triggerForm,
   createPopup,
@@ -241,6 +245,7 @@ export const DWeb = globalThis.DWeb = {
         connectedDid: uri,
         delegateDid
       });
+      modifyProtocolsObject(instance);
       if (options.sync !== false) {
         const isRegistered = await agent.sync.getIdentityOptions(uri); 
         if (!isRegistered) {

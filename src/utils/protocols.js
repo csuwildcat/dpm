@@ -83,13 +83,16 @@ const dpmDefinition = {
       },
       release: {
         $tags : {
+          name : {
+            type : 'string',
+          },
           version : {
             type : 'string',
           },
           integrity : {
             type : 'string',
           },
-          $requiredTags : ['version', 'integrity']
+          $requiredTags : ['name', 'version', 'integrity']
         },
         $actions : [
           {

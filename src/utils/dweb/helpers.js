@@ -2,7 +2,6 @@
 import { Web5 } from '@web5/api';
 import { DwnRegistrar, Oidc } from '@web5/agent';
 import { DidJwk } from '@web5/dids';
-import { de } from 'date-fns/locale';
 
 export function canonicalize(object) {
   var buffer = '';

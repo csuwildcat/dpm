@@ -15,6 +15,7 @@ import { $App } from './app';
 import { AppRouter } from './utils/router';
 import { State, Query } from './components/mixins';
 import { DWeb } from './utils/dweb';
+import * as protocols from './utils/protocols';
 
 import { activatePolyfills } from '@web5/api';
 activatePolyfills();
@@ -28,6 +29,11 @@ import './pages/identities';
 import PageStyles from './styles/page';
 import { Oidc } from '@web5/agent';
 
+//console.log(DWeb.protocols);
+
+// DWeb.protocols('alias', {
+//   profile: protocols.profile.definition
+// })
 
 export class AppView extends LitElement.with($App, State, Query) {
 
@@ -339,8 +345,8 @@ export class AppView extends LitElement.with($App, State, Query) {
 
       #nav a[active] {
         opacity: 1;
-        color: var(--sl-color-blue-700);
-        border-right: 2px solid rgb(51 117 174);
+        color: hsl(0deg 100% 69.58%);
+        border-right: 2px solid rgb(203 1 1);
       }
 
       #nav a[active] sl-icon {

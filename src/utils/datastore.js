@@ -23,13 +23,13 @@ class Datastore {
 
   constructor(web5, options = {}){
     this.options = options;
+    this.web5 = web5;
     this.did = web5.did.connectedDid;
     this.dwn = web5.dwn;
     this.ready = this.installProtocols();
   }
 
   async installProtocols(){
-    const installed = await this.dwn.protocols.query({ message: {} });
     const configurationPromises = [];
     if (this.options.aggregator) {
       const structure = protocols.social.definition.structure;
@@ -42,25 +42,9 @@ class Datastore {
     }
     try {
       for (let z in protocols.byUri) {
-        let record = installed.protocols.find(record => z === record.definition.protocol);
-        let definition = protocols.byUri[z].definition;
-        let appDef = natives.canonicalize(definition);
-        let configuredDef = natives.canonicalize(record?.definition || null);
-        if (appDef !== configuredDef) {
-          console.log('installing protocol: ' + z);
-          configurationPromises.push(this.dwn.protocols.configure({
-            message: { definition }
-          }))
-        }
+        configurationPromises.push(this.web5.installProtocol(protocols.byUri[z].definition));
       }
-      const configurationResponses = await Promise.all(configurationPromises);
-      try {
-        await Promise.all(configurationResponses.map(({ protocol }) => protocol.send(this.did)));
-      }
-      catch (e) {
-        console.log('remote push of configuration failed', e);
-        return true;
-      }
+      await Promise.all(configurationPromises);
     }
     catch (e) {
       console.log('local install of configuration failed', e);
