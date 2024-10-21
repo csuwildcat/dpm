@@ -2,6 +2,7 @@
 import { DWeb } from './utils/dweb';
 import { State } from './components/mixins/index.js';
 import { Datastore } from './utils/datastore.js';
+import * as protocols from './utils/protocols';
 
 async function initializeIdentities(list){
   const identities = {};
@@ -12,6 +13,13 @@ async function initializeIdentities(list){
     if (identity.web5) return;
     const web5 = identity.web5 = await DWeb.use(identity);
     const datastore = identity.datastore = new Datastore(web5);
+    const configurationPromises = [];
+    for (let alias in protocols.byAlias) {
+      configurationPromises.push(web5.installProtocol(protocols.byAlias[alias].definition).then(() => {
+        web5.aliasProtocol(alias, protocols.byAlias[alias].definition)
+    }));
+    }
+    await Promise.all(configurationPromises);
     startupTasks.push(datastore.readRecordPath('profile', 'connect').then(async record => {
       if (record) {
         const data = record.cache.json || {};

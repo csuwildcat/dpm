@@ -33,7 +33,13 @@ const methods = {
     const { records } = await queryRecords(web5, definition, this._path, Object.assign(options, {
       latest: true
     }));
-    return records[0]
+    const record = records[0];
+    // if (record && options.cache !== false) {
+    //   if (record.dataFormat === 'application/json' || record.dataFormat === 'text/json') {
+    //     record.cache.json = record
+    //   }
+    // }
+    return record
   },
   async $create(options = {}) {
     const { web5, definition } = this._config;
@@ -145,7 +151,8 @@ export function modifyProtocolsObject(web5){
         console.log('installing protocol: ' + definition.protocol);
         return web5.dwn.protocols.configure({
           message: { definition }
-        }).then(protocol => {
+        }).then(({ protocol }) => {
+          console.log(protocol);
           web5.installedProtocols.push(protocol);
           return protocol.send(web5.connectedDid);
         })

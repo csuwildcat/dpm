@@ -11,7 +11,7 @@ function addSchemas(config) {
 }
 
 
-const dpmDefinition = {
+const drpmDefinition = {
   protocol  : 'https://dpm.software/docs/protocol',
   published : true,
   types     : {
@@ -167,13 +167,17 @@ export const profile = {
   definition: profileDefinition
 }
 
-export const dpm = {
-  uri: dpmDefinition.protocol,
-  schemas: addSchemas(dpmDefinition),
-  definition: dpmDefinition
+export const drpm = {
+  uri: drpmDefinition.protocol,
+  schemas: addSchemas(drpmDefinition),
+  definition: drpmDefinition
 }
 
 export const byUri = {
   [profileDefinition.protocol]: profile,
-  // [socialDefinition.protocol]: dpm,
+  [drpmDefinition.protocol]: drpm,
+}
+
+export const byAlias = {
+  profile, drpm
 }

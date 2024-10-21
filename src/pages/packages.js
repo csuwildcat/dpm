@@ -7,7 +7,7 @@ import * as protocols from '../utils/protocols.js';
 import '../components/shoelace.js';
 
 import '../components/create-identity.js';
-import '../components/detail-box.js';
+import '../components/identity-selector.js';
 import { notify } from '../utils/notifications.js';
 import PageStyles from '../styles/page.js';
 
@@ -15,9 +15,16 @@ import { State, Query, Spinner, SpinnerStyles } from '../components/mixins/index
 
 const packageNameRegex = /^[a-zA-Z0-9\-]*/;
 const supportedApps = {
-  'api.github.com': json => {
-    const { name, description } = json;
-    return { name, description };
+  '^(?:.*)?github.com\\/([^\\/]+)\\/([^\\/]+)': {
+    parser: match => {
+      const owner = match[1];
+      const repo = match[2];
+      return `https://api.github.com/repos/${owner}/${repo}`;
+    },
+    handler: json => {
+      const { name, description } = json;
+      return { name, description };
+    }
   }
 };
 
@@ -34,7 +41,8 @@ export class PackagesPage extends LitElement.with(State, Query, Spinner) {
     createPackageModal: ['#create_package_modal', true],
     publishReleaseModal: ['#publish_release_modal', true],
     autoCreatePackageInput: ['#auto_create_package_input', true],
-    manualCreatePackageName: ['#manual_create_package_name', true]
+    manualCreatePackageName: ['#manual_create_package_name', true],
+    identitySelector: '#create_package_identity_selector'
   }
 
   constructor() {
@@ -53,13 +61,35 @@ export class PackagesPage extends LitElement.with(State, Query, Spinner) {
   }
 
   async createPackage() {
+
+    const identity = this?.identities?.[this.identitySelector.value];
+    if (!identity) {
+      notify.error('You must select which identity you want to this new package to be published from.');
+      return;
+    }
+
+    let app;
     let url;
     let data;
+    let endpoint;
     try { url = new URL(this.autoCreatePackageInput.value) }
-    catch (e) { url = null; }
-    if (url && supportedApps[url.host]) {
-      const json = await fetch(url.href).then(res => res.json());
-      data = supportedApps[url.host](json);
+    catch (e) {}
+    if (url) {
+      for (let z in supportedApps) {
+        const match = url.href.match(new RegExp(z))
+        if (match){
+          const result = supportedApps[z].parser(match);
+          if (result) {
+            app = supportedApps[z];
+            endpoint = result;
+            break;
+          };
+        }
+      }
+    }
+    if (endpoint) {
+      const json = await fetch(endpoint).then(res => res.json());
+      data = app.handler(json);
       data.repo = url.href;
     }
     else if (this.manualCreatePackageName.value) {
@@ -71,6 +101,7 @@ export class PackagesPage extends LitElement.with(State, Query, Spinner) {
     }
     if (!this?.packages?.find(record => record.tags.name === data.name)) {
       console.log(data);
+
     }
   }
 
@@ -104,6 +135,10 @@ export class PackagesPage extends LitElement.with(State, Query, Spinner) {
       </section>
 
       <sl-dialog id="create_package_modal" label="Create a Package" placement="start">
+
+        <identity-selector id="create_package_identity_selector" label="Select an Publishing Identity"></identity-selector>
+
+        <div divider></div>
 
         <sl-input id="auto_create_package_input" label="Add from project link" placeholder="Supported links: GitHub repos" @input="${ e => {
           this.createPackageModal.querySelectorAll('.manual-create-package-input').forEach(input => input.disabled = !!e.target.value);

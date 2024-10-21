@@ -163,20 +163,22 @@ export class ProfileView extends LitElement.with(State, Query) {
     try {
       await this.ready;
       this.owner = this.identities[did];
+      this.dwn = this.owner.web5.protocols || Object.values(this.identities)?.[0]?.web5?.protocols;
+      window.web5 = this.web5;
+      console.log(this.web5);
       this.datastore = this.owner?.datastore || Object.values(this.identities)[0]?.datastore;
       this.clearData();
       this.heroImage.style.setProperty('--deterministic-background', generateGradient(did.split(':')[2]));
       const records = await Promise.all([
-        this.datastore.getSocial({ from: this.owner ? undefined : did }),
-        this.datastore.getCareer({ from: this.owner ? undefined : did }),
+        this.dwn.profile.social.$get({ from: this.owner ? undefined : did }),
+        this.dwn.profile.career.$get({ from: this.owner ? undefined : did }),
       ])
-      this.avatar = `https://dweb/${this.did}/read/protocols/${this.profileProtocolEncoded}/avatar`;
-      this.hero = `https://dweb/${this.did}/read/protocols/${this.profileProtocolEncoded}/hero`;
+      this.avatar = `https://dweb/${did}/read/protocols/${this.profileProtocolEncoded}/avatar`;
+      this.hero = `https://dweb/${did}/read/protocols/${this.profileProtocolEncoded}/hero`;
       this.social = records[0];
       this.career = records[1];
-      this.socialData = this.social?.cache?.json || this.socialData;
-      
-      this.careerData = this.career?.cache?.json || this.careerData;
+      this.socialData = await this.social?.data?.json() || this.socialData;
+      this.careerData = await this.career?.data?.json() || this.careerData;
       this.loadingError = false;
       this.loaded = true;
       DOM.fireEvent(this, 'profile-view-load-success')

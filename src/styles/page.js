@@ -285,6 +285,11 @@ sl-tab-group::part(tabs) {
   margin: 3px 0 0 0.5rem; /* Space between the word and the line */
 }
 
+[divider]:empty::before,
+[divider]:empty::after {
+  margin: 3px 0 0 0;
+}
+
 [break-text] {
   display: block;
   position: relative;

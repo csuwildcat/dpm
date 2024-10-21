@@ -17,7 +17,7 @@ import { State, Query } from './components/mixins';
 import { DWeb } from './utils/dweb';
 import * as protocols from './utils/protocols';
 
-import { activatePolyfills } from '@web5/api';
+import { activatePolyfills } from '@web5/browser';
 activatePolyfills();
 
 import { DOM } from './utils/dom.js';
@@ -137,7 +137,7 @@ export class AppView extends LitElement.with($App, State, Query) {
       
       <sl-icon slot="navbar" id="nav_toggle" name="list" @click="${e => this.appLayout.drawerOpened = true}"></sl-icon>
       <!-- <sl-icon slot="navbar" id="logo_icon" name="app-logo"></sl-icon> -->
-      <h1 slot="navbar">dpm</h1>
+      <h1 slot="navbar">drpm</h1>
 
       <nav id="nav" slot="drawer" @click="${e => this.nav?.removeAttribute('open')}">
         

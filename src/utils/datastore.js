@@ -30,6 +30,7 @@ class Datastore {
   }
 
   async installProtocols(){
+    return true;
     const configurationPromises = [];
     if (this.options.aggregator) {
       const structure = protocols.social.definition.structure;
@@ -447,13 +448,13 @@ class Datastore {
   }
 
   async queryPackages(options = {}){
-    const response = await this.queryProtocolRecords('dpm', 'package', options);
+    const response = await this.queryProtocolRecords('drpm', 'package', options);
     if (options.cache !== false) await cacheJson(response.records);
     return response;
   }
 
   async createPackage(options = {}) {
-    const { record, status } = await this.createProtocolRecord('dpm', 'package', {
+    const { record, status } = await this.createProtocolRecord('drpm', 'package', {
       published: false,
       data: options.data || {},
       dataFormat: 'application/json'
